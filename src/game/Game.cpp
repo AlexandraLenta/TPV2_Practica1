@@ -36,8 +36,8 @@ Game::~Game() {
 void Game::init() {
 
 	// initialize the SDL singleton
-	if (!SDLUtils::Init("PacMan, Stars, ...", 800, 600,
-			"resources/config/resources.json")) {
+	if (!SDLUtils::Init("Asteroids", 800, 600,
+			"resources/config/asteroid.resources.json")) {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
@@ -108,6 +108,8 @@ void Game::start() {
 		sdlutils().clearRenderer();
 		_mngr->render();
 		sdlutils().presentRenderer();
+
+		_mngr->flush();
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
