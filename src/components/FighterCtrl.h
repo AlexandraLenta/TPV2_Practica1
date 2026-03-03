@@ -16,5 +16,8 @@ public:
 private:
 	void createStart();
 	Transform* _tr;
+
+	float _thrust = 0.2f;
+	float _speedLimit = 3.0f;
 };
 

@@ -45,28 +45,15 @@ void FighterCtrl::update() {
 		vel_ = vel_.rotate(-5.0f);
 	}
 	else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) { // increase speed
+		Vector2D new_vel = vel_ + Vector2D(0, -1).rotate(rot) * _thrust;
 
-		// add 1.0f to the speed (respecting the limit 3.0f). Recall
-		// that speed is the length of the velocity vector
-		float speed = std::min(3.0f, vel_.magnitude() + 1.0f);
+		if (new_vel.magnitude() > _speedLimit) {
+			new_vel = new_vel.normalize() * _speedLimit;
+		}
 
-		// change the length of velocity vecto to 'speed'. We need
-		// '.rotate(rot)' for the case in which the current speed is
-		// 0, so we rotate it to the same direction where the PacMan
-		// is looking
-		//
-		vel_ = Vector2D(0, -speed).rotate(rot);
-	}
-	else if (ihldr.isKeyDown(SDL_SCANCODE_DOWN)) { // decrease speed
-		// subtract 1.0f to the speed (respecting the limit 0.0f). Recall
-		// that speed is the length of the velocity vector
-		float speed = std::max(0.0f, vel_.magnitude() - 1.0f);
+		vel_ = new_vel;
 
-		// change the length of velocity vector to 'speed'. We need
-		// '.rotate(rot)' for the case in which the current speed is
-		// 0, so we rotate it to the same direction where the fighter
-		// is looking
-		//
-		vel_ = Vector2D(0, -speed).rotate(rot);
+		// play sound
+		sdlutils().soundEffects().at("thrust").play("se");
 	}
 }

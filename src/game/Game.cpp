@@ -84,13 +84,13 @@ void Game::start() {
 	// reset the time before starting - so we calculate correct
 	// delta-time in the first iteration
 	//
-	sdlutils().resetTime();
+	sdlutils().virtualTimer().resetTime();
 
 	while (!exit) {
 		// store the current time -- all game objects should use this time when
 		// then need to the current time. They also have accessed to the time elapsed
 		// between the last two calls to regCurrTime().
-		Uint32 startTime = sdlutils().regCurrTime();
+		Uint32 startTime = sdlutils().virtualTimer().regCurrTime();
 
 		// refresh the input handler
 		ihdlr.refresh();
@@ -111,7 +111,7 @@ void Game::start() {
 
 		_mngr->flush();
 
-		Uint32 frameTime = sdlutils().currRealTime() - startTime;
+		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
 
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
@@ -123,7 +123,7 @@ void Game::checkCollisions() {
 
 	// the PacMan's Transform
 	//
-	auto pTR = _mngr->getHandler(ecs::hdlr::SHIP)->getComponent<Transform>();
+	auto pTR = _mngr->getHandler(ecs::hdlr::FIGHTER)->getComponent<Transform>();
 
 	// For safety, we traverse with a normal loop until the current size. In this
 	// particular case we could use a for-each loop since the list stars is not
@@ -146,8 +146,6 @@ void Game::checkCollisions() {
 				e->setAlive(false);
 				_mngr->getHandler(ecs::hdlr::GAMEINFO)->getComponent<GameCtrl>()->onStarEaten();
 
-				// play sound
-				sdlutils().soundEffects().at("pacman_eat").play("se");
 			}
 		}
 	}
