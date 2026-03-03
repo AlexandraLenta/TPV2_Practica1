@@ -36,6 +36,10 @@ public:
 		return _vel;
 	}
 
+	void setVel(Vector2D vel) {
+		_vel = vel;
+	}
+
 	float getWidth() {
 		return _width;
 	}

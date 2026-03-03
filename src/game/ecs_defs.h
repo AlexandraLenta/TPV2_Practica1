@@ -7,8 +7,9 @@
 //
 #define _CMPS_LIST_ \
 	TRANSFORM, \
+	DEACCELERATION, \
 	IMAGE, \
-	PACMANCTRL, \
+	FIGHTERCTRL, \
 	STARMOTION, \
 	GAMECTRL, \
 	STOPONBORDER
@@ -22,6 +23,5 @@
 // Handlers list - must have at least one element
 //
 #define _HDLRS_LIST_ \
-    PACMAN, \
+    FIGHTER, \
 	GAMEINFO
-

@@ -4,8 +4,8 @@
 
 #include "../components/GameCtrl.h"
 #include "../components/Image.h"
-#include "../components/PacManCtrl.h"
-#include "../components/StopOnBorders.h"
+#include "../components/FighterCtrl.h"
+#include "../components/DeAcceleration.h"
 #include "../components/Transform.h"
 #include "../ecs/Entity.h"
 #include "../ecs/EntityManager.h"
@@ -57,16 +57,16 @@ void Game::init() {
 
 	// create the PacMan entity
 	//
-	auto pacman = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::PACMAN, pacman);
-	auto tr = pacman->addComponent<Transform>();
+	auto fighter = _mngr->addEntity();
+	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
+	auto tr = fighter->addComponent<Transform>();
 	auto s = 50.0f;
 	auto x = (sdlutils().width() - s) / 2.0f;
 	auto y = (sdlutils().height() - s) / 2.0f;
 	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	pacman->addComponent<Image>(&sdlutils().images().at("pacman"));
-	pacman->addComponent<PacManCtrl>();
-	pacman->addComponent<StopOnBorders>();
+	fighter->addComponent<Image>(&sdlutils().images().at("fighter")); // image
+	fighter->addComponent<FighterCtrl>(); // controller
+	fighter->addComponent<DeAcceleration>(0.995f, 0.05f); // deacceleration
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
@@ -123,7 +123,7 @@ void Game::checkCollisions() {
 
 	// the PacMan's Transform
 	//
-	auto pTR = _mngr->getHandler(ecs::hdlr::PACMAN)->getComponent<Transform>();
+	auto pTR = _mngr->getHandler(ecs::hdlr::SHIP)->getComponent<Transform>();
 
 	// For safety, we traverse with a normal loop until the current size. In this
 	// particular case we could use a for-each loop since the list stars is not
