@@ -14,7 +14,6 @@ public:
 	void update() override;
 
 private:
-	void createStart();
 	Transform* _tr;
 
 	float _thrust = 0.2f;

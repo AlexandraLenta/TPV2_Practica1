@@ -7,6 +7,8 @@
 #include "../components/FighterCtrl.h"
 #include "../components/DeAcceleration.h"
 #include "../components/Transform.h"
+#include "../components/Gun.h"
+#include "../components/ShowAtOppositeSide.h"
 #include "../ecs/Entity.h"
 #include "../ecs/EntityManager.h"
 #include "../sdlutils/InputHandler.h"
@@ -67,6 +69,8 @@ void Game::init() {
 	fighter->addComponent<Image>(&sdlutils().images().at("fighter")); // image
 	fighter->addComponent<FighterCtrl>(); // controller
 	fighter->addComponent<DeAcceleration>(0.995f, 0.05f); // deacceleration
+	fighter->addComponent<Gun>();
+	fighter->addComponent<ShowAtOppositeSide>();
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
