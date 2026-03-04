@@ -3,18 +3,13 @@
 #include "Game.h"
 
 #include "../components/GameCtrl.h"
-#include "../components/Image.h"
-#include "../components/FighterCtrl.h"
-#include "../components/DeAcceleration.h"
-#include "../components/Transform.h"
-#include "../components/Gun.h"
-#include "../components/ShowAtOppositeSide.h"
 #include "../ecs/Entity.h"
 #include "../ecs/EntityManager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
+#include "../game/FighterUtils.h"
 
 using ecs::Entity;
 using ecs::EntityManager;
@@ -56,21 +51,9 @@ void Game::init() {
 
 	// Create the manager
 	_mngr = new EntityManager();
+	_fighterUtils = new FighterUtils(_mngr);
 
-	// create the PacMan entity
-	//
-	auto fighter = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
-	auto tr = fighter->addComponent<Transform>();
-	auto s = 50.0f;
-	auto x = (sdlutils().width() - s) / 2.0f;
-	auto y = (sdlutils().height() - s) / 2.0f;
-	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	fighter->addComponent<Image>(&sdlutils().images().at("fighter")); // image
-	fighter->addComponent<FighterCtrl>(); // controller
-	fighter->addComponent<DeAcceleration>(0.995f, 0.05f); // deacceleration
-	fighter->addComponent<Gun>();
-	fighter->addComponent<ShowAtOppositeSide>();
+	_fighterUtils->create_fighter();
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();

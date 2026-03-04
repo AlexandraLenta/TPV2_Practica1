@@ -3,14 +3,12 @@
 #include "../utils/Vector2D.h"
 #include <cassert>
 
-static const int MAX_HP = 3;
-
 class Health : public ecs::Component
 {
 public:
 	__CMPID_DECL__(ecs::cmp::TRANSFORM)
 
-		Health();
+		Health(int hp);
 	~Health();
 
 	void initComponent() override;
@@ -24,6 +22,7 @@ public:
 
 private:
 	int _hp;
+	int _maxHp;
 	Transform* _tr;
 	const Texture* _tex;
 };

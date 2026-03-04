@@ -2,9 +2,13 @@
 
 #pragma once
 
+
+
 namespace ecs {
 class EntityManager;
 }
+
+class FighterUtils;
 
 class Game {
 public:
@@ -15,5 +19,6 @@ public:
 private:
 	void checkCollisions();
 	ecs::EntityManager *_mngr;
+	FighterUtils* _fighterUtils;
 };
 

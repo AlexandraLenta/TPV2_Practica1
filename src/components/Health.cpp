@@ -6,7 +6,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "Transform.h"
 
-Health::Health() : _hp(MAX_HP) {
+Health::Health(int hp) : _hp(hp), _maxHp(hp) {
 	_tex = &sdlutils().images().at("heart");
 }
 
@@ -14,7 +14,7 @@ Health::~Health() {}
 
 void
 Health::initComponent() {
-	_hp = MAX_HP;
+	_hp = _maxHp;
 
 	_tr = _ent->getComponent<Transform>();
 	assert(_tr != nullptr);
@@ -27,7 +27,7 @@ Health::removeHealth() {
 
 void
 Health::resetHealth() {
-	_hp = MAX_HP;
+	_hp = _maxHp;
 }
 
 int
