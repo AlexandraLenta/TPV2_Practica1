@@ -21,8 +21,9 @@ Health::initComponent() {
 }
 
 void
-Health::removeHealth() {
-	if (--_hp < 0) _hp = 0;
+Health::removeHealth(int n) {
+	_hp -= n;
+	if (_hp < 0) _hp = 0;
 }
 
 void

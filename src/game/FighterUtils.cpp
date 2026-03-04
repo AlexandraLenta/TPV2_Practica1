@@ -15,43 +15,50 @@ FighterUtils::FighterUtils(ecs::EntityManager* mngr) : FighterFacade(), _mngr(mn
 void
 FighterUtils::create_fighter() {
 	// create fighter
-	auto fighter = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::FIGHTER, fighter);
+	_fighter = _mngr->addEntity();
+	_mngr->setHandler(ecs::hdlr::FIGHTER, _fighter);
 
 	auto& fighterTexture = sdlutils().images().at("fighter");
 	
 	// add components
-	fighter->addComponent<FighterCtrl>(); // controller
+	_fighter->addComponent<FighterCtrl>(); // controller
 
-	auto tr = fighter->addComponent<Transform>(); // movement
+	auto tr = _fighter->addComponent<Transform>(); // movement
 	auto w = fighterTexture.width();
 	auto h = fighterTexture.height();
 	auto x = (sdlutils().width() - w) / 2.0f;
 	auto y = (sdlutils().height() - h) / 2.0f;
 	tr->init(Vector2D(x, y), Vector2D(), w, h, 0.0f);
 
-	fighter->addComponent<DeAcceleration>(0.995f, 0.05f); // deacceleration
+	_fighter->addComponent<DeAcceleration>(0.995f, 0.05f); // deacceleration
 
-	fighter->addComponent<Gun>(&sdlutils().images().at("fire")); // gun
+	_fighter->addComponent<Gun>(&sdlutils().images().at("fire")); // gun
 
-	fighter->addComponent<ShowAtOppositeSide>(); // border control
+	_fighter->addComponent<ShowAtOppositeSide>(); // border control
 
-	fighter->addComponent<Image>(fighterTexture); // image
+	_fighter->addComponent<Image>(fighterTexture); // image
 
-	fighter->addComponent<Health>(3);
+	_fighter->addComponent<Health>(3); // health
 }
 
 void 
 FighterUtils::reset_fighter() {
+	auto* tex = _fighter->getComponent<Image>()->getTexture();
+	auto w = tex->width();
+	auto h = tex->height();
+	auto x = (sdlutils().width() - w) / 2.0f;
+	auto y = (sdlutils().height() - h) / 2.0f;
 
+	_fighter->getComponent<Transform>()->init(Vector2D(x, y), Vector2D(), w, h, 0.0f);
+	_fighter->getComponent<Gun>()->reset();
 }
 
 void 
 FighterUtils::reset_lives() {
-
+	_fighter->getComponent<Health>()->resetHealth();
 }
 
 int
 FighterUtils::update_lives(int n) {
-
+	_fighter->getComponent<Health>()->removeHealth(n);
 }

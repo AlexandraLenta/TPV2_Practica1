@@ -1,6 +1,7 @@
 #pragma once
 #include "FighterFacade.h"
 #include "../ecs/EntityManager.h"
+#include "../ecs/Entity.h"
 
 class FighterUtils :
     public FighterFacade
@@ -15,5 +16,6 @@ public:
 
 private:
     ecs::EntityManager* _mngr;
+    ecs::Entity* _fighter;
 };
 

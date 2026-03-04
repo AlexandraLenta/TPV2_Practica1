@@ -14,7 +14,7 @@ public:
 	void initComponent() override;
 
 	void resetHealth();
-	void removeHealth();
+	void removeHealth(int n);
 
 	int getHP();
 
