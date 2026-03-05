@@ -19,6 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\PausedState.cpp" />
+    <ClCompile Include="src\game\RunningState.cpp" />
+    <ClCompile Include="src\game\AsteroidsFacade.cpp" />
+    <ClCompile Include="src\game\AsteroidsUtils.cpp" />
+    <ClCompile Include="src\game\NewRoundState.cpp" />
+    <ClCompile Include="src\game\NewGameState.cpp" />
     <ClCompile Include="src\components\DeAcceleration.cpp" />
     <ClCompile Include="src\components\FighterCtrl.cpp" />
     <ClCompile Include="src\components\Gun.cpp" />
@@ -47,6 +53,12 @@
     <ClCompile Include="src\game\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\PausedState.h" />
+    <ClInclude Include="src\game\RunningState.h" />
+    <ClInclude Include="src\game\AsteroidsFacade.h" />
+    <ClInclude Include="src\game\AsteroidsUtils.h" />
+    <ClInclude Include="src\game\NewRoundState.h" />
+    <ClInclude Include="src\game\NewGameState.h" />
     <ClInclude Include="src\components\DeAcceleration.h" />
     <ClInclude Include="src\components\FighterCtrl.h" />
     <ClInclude Include="src\components\Gun.h" />

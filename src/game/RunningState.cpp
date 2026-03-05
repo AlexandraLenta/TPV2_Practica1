@@ -32,4 +32,10 @@ void RunningState::update() {
 
     //f. refresh
     _entity-> getMngr().refresh();
+
+    // g) Aniadir asteroide cada 5 segundos
+    if (sdlutils().virtualTimer() - _lastAsteroidTime > 5000) {
+        _AsteroidsFacade->create_asteroids(1);
+        _lastAsteroidTime = sdlutils().virtualTimer().currTime();
+    }
 }

@@ -1,17 +1,16 @@
 #pragma once
 #include "GameState.h"
+#include "../sdlutils/SDLUtils.h"
 
-class NewGameState :public GameState
+class PausedState :
+    public GameState
 {
 public:
-    NewGameState() {}
-    virtual ~NewGameState() {}
+    PausedState();
+    virtual ~PausedState() {}
 
     void enter() override;
     void leave() override;
     void update() override;
-
-private:
-    FighterUtils* _fighterUtils;
 };
 

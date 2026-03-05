@@ -15,7 +15,7 @@ void NewGameState::update() {
 
     SDLUtils::sdlutils().msgs().at("press any key to start a new game")->render(sdlutils().renderer(), 200, 300);
 
-    if (ihdlr.keyDownEvent()) {
+    if (ihdlr.keyDownEvent()) { //PERO PQ NO FUNCIONA 
         _fighterUtils -> reset_lives();
         Game::Instance()->setState(Game::NEWROUND);
     }
