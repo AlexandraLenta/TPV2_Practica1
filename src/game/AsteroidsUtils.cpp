@@ -7,6 +7,7 @@
 #include "../components/Gun.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/Health.h"
+#include "../ecs/EntityManager.h"
 
 AsteroidsUtils::AsteroidsUtils() 
 {
@@ -21,18 +22,12 @@ void AsteroidsUtils::create_asteroids(int n) {
 }
 
 void AsteroidsUtils::remove_all_asteroids() {
-
-    auto& mngr = _entity ->getMngr();//COMO SE COGE ESTA  MIERDAD
-
-    _mngr->getMngr().refresh();//AAAAAAA
+    _mngr->refresh();
 }
 
-void AsteroidsUtils::split_astroid(ecs::entity_t a) {
+void AsteroidsUtils::split_asteroid(ecs::Entity a) {
 
     //auto tr = _entity->addComponent<Transform>();
 
     //_entity->setAlive(false);
 }
-
-
-

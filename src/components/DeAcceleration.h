@@ -3,6 +3,8 @@
 #pragma once
 #include "../ecs/Component.h"
 #include "../utils/Vector2D.h"
+#include "../components/Transform.h"
+#include "../ecs/Entity.h"
 #include <cassert>
 
 class DeAcceleration : public ecs::Component {

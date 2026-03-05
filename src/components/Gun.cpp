@@ -4,9 +4,7 @@
 #include "../components/Transform.h"
 #include "../ecs/Entity.h"
 
-Gun::Gun(Texture* tex) : _tex(tex) {}
-
-Gun::~Gun() {}
+Gun::Gun(const Texture* tex) : _tex(tex) {}
 
 void Gun::initComponent() {
 	_tr = _ent->getComponent<Transform>();

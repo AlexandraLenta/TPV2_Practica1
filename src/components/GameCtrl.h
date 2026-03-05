@@ -12,24 +12,8 @@ public:
 	GameCtrl();
 	virtual ~GameCtrl();
 
-	inline void onStarDeath() {
-		_currNumOfStars--;
-	}
-
-	inline void onStarEaten() {
-		_currNumOfStars--;
-		_score++;
-	}
-
 	void initComponent() override;
 	void update() override;
 	void render() override;
-
-private:
-	void createStart(unsigned int n);
-
-	unsigned int _currNumOfStars;
-	unsigned int _score;
-	unsigned int _starsLimit;
 };
 

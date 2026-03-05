@@ -1,6 +1,8 @@
 #pragma once
 #include "GameState.h"
 
+class FighterUtils;
+
 class NewGameState :public GameState
 {
 public:

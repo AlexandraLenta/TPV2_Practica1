@@ -2,6 +2,9 @@
 #include "GameState.h"
 #include "../sdlutils/SDLUtils.h"
 
+class AsteroidsUtils;
+class FighterFacade;
+
 class NewRoundState :
     public GameState
 {

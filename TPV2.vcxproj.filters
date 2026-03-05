@@ -57,12 +57,6 @@
     <ClCompile Include="src\components\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\PacManCtrl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\StarMotion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\components\StopOnBorders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -109,6 +103,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game\PausedState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\GameOverState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -185,12 +182,6 @@
     <ClInclude Include="src\components\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\PacManCtrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components\StarMotion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\components\StopOnBorders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -258,6 +249,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game\PausedState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\GameOverState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

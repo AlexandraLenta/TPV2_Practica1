@@ -1,5 +1,7 @@
 #include "RunningState.h"
 #include "Game.h"
+#include "../sdlutils/InputHandler.h"
+#include "../ecs/EntityManager.h"
 
 RunningState::RunningState(): _lastAsteroidTime(0)
 {
@@ -12,7 +14,7 @@ void RunningState::enter() {
 void RunningState::leave() {}
 
 void RunningState::update() {
-
+    auto& ihdlr = ih();
     //a. Si hay 0 asteroides cambia al estado GameOverState
     
 
@@ -23,18 +25,18 @@ void RunningState::update() {
     }
 
     //c. Update entidades
-    _entity->getMngr().update();//COMO SE COGE ESTOOOOOO
+    Game::Instance()->getMngr()->update();//COMO SE COGE ESTOOOOOO
 
     //d. Colisiones
 
     //e. render
-    _entity->getMngr().render(); //COMO SE COGE ESTOOOOOO
+    Game::Instance()->getMngr()->render(); //COMO SE COGE ESTOOOOOO
 
     //f. refresh
-    _entity-> getMngr().refresh();
+    Game::Instance()->getMngr()->refresh();
 
     // g) Aniadir asteroide cada 5 segundos
-    if (sdlutils().virtualTimer() - _lastAsteroidTime > 5000) {
+    if (sdlutils().virtualTimer().currRealTime() - _lastAsteroidTime > 5000) {
         _AsteroidsFacade->create_asteroids(1);
         _lastAsteroidTime = sdlutils().virtualTimer().currTime();
     }

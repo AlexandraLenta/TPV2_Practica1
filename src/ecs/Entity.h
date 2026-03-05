@@ -20,7 +20,6 @@ namespace ecs {
 class Entity {
 public:
 	Entity(ecs::grpId_t gId, EntityManager *mngr) :
-			_mngr(mngr), //
 			_cmps(), //
 			_currCmps(), //
 			_alive(),  //
@@ -48,11 +47,6 @@ public:
 		//
 		for (auto c : _currCmps)
 			delete c;
-	}
-
-	// Returns the manager to which this entity belongs
-	inline EntityManager* getMngr() {
-		return _mngr;
 	}
 
 	// Setting the state of the entity (alive or dead)
@@ -180,8 +174,6 @@ private:
 	// the fields currCmps_ can be removed, and instead we can traverse cmps_
 	// and process non-null elements. We keep it because sometimes the order
 	// in which the components are executed is important
-
-	EntityManager *_mngr;
 	std::array<Component*, maxComponentId> _cmps;
 	std::vector<Component*> _currCmps;
 	bool _alive;

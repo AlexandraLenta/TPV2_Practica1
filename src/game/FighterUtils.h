@@ -7,7 +7,7 @@ class FighterUtils :
     public FighterFacade
 {
 public:
-    FighterUtils(ecs::EntityManager* mngr);
+    FighterUtils();
 
     void create_fighter() override;
     void reset_fighter() override;
@@ -18,4 +18,3 @@ private:
     ecs::EntityManager* _mngr;
     ecs::Entity* _fighter;
 };
-

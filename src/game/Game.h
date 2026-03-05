@@ -14,8 +14,13 @@ class Game : public Singleton<Game> {
 public:
 	Game();
 	virtual ~Game();
-	void init();
+	bool init();
+	void initGame();
 	void start();
+
+	ecs::EntityManager* getMngr() {
+		return _mngr;
+	}
 
 	enum State {
 		RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER

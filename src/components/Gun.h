@@ -2,13 +2,16 @@
 #include "../ecs/Component.h"
 #include <array>
 #include "../utils/Vector2D.h"
+#include "../sdlutils/Texture.h"
+
+class Transform;
 
 class Gun : public ecs::Component {
 public:
 
 	__CMPID_DECL__(ecs::cmp::GUN)
 	
-	Gun(Texture* tex);
+	Gun(const Texture* tex);
 	void initComponent() override;
 	
 	void update() override;
@@ -45,7 +48,7 @@ private:
 
 	int _lastUsedBullet = -1;
 
-	Texture* _tex;
+	const Texture* _tex;
 	Transform* _tr;
 };
 

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\GameOverState.cpp" />
     <ClCompile Include="src\game\PausedState.cpp" />
     <ClCompile Include="src\game\RunningState.cpp" />
     <ClCompile Include="src\game\AsteroidsFacade.cpp" />
@@ -46,13 +47,12 @@
     <ClCompile Include="src\utils\Vector2D.cpp" />
     <ClCompile Include="src\components\GameCtrl.cpp" />
     <ClCompile Include="src\components\Image.cpp" />
-    <ClCompile Include="src\components\PacManCtrl.cpp" />
-    <ClCompile Include="src\components\StarMotion.cpp" />
     <ClCompile Include="src\components\StopOnBorders.cpp" />
     <ClCompile Include="src\ecs\EntityManager.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\GameOverState.h" />
     <ClInclude Include="src\game\PausedState.h" />
     <ClInclude Include="src\game\RunningState.h" />
     <ClInclude Include="src\game\AsteroidsFacade.h" />
@@ -96,8 +96,6 @@
     <ClInclude Include="src\ecs\EntityManager.h" />
     <ClInclude Include="src\components\GameCtrl.h" />
     <ClInclude Include="src\components\Image.h" />
-    <ClInclude Include="src\components\PacManCtrl.h" />
-    <ClInclude Include="src\components\StarMotion.h" />
     <ClInclude Include="src\components\StopOnBorders.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\game\ecs_def.h" />

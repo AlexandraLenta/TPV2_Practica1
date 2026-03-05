@@ -4,7 +4,7 @@
 #include "../ecs/EntityManager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-#include "Transform.h"
+#include "../components/Transform.h"
 
 Health::Health(int hp) : _hp(hp), _maxHp(hp) {
 	_tex = &sdlutils().images().at("heart");
@@ -15,9 +15,6 @@ Health::~Health() {}
 void
 Health::initComponent() {
 	_hp = _maxHp;
-
-	_tr = _ent->getComponent<Transform>();
-	assert(_tr != nullptr);
 }
 
 void
@@ -38,9 +35,10 @@ Health::getHP() {
 
 void
 Health::render() {
-	SDL_FRect dest = build_sdlfrect(_tr->getPos(), _tr->getWidth(),
-		_tr->getHeight());
+	// TODO: render hp amount of hearts
+	SDL_FRect dest = build_sdlfrect(0, sdlutils().width() - _hp * _tex->width(), _tex->width(),
+		_tex->height());
 
 	assert(_tex != nullptr);
-	_tex->render(dest, _tr->getRot());
+	_tex->render(dest);
 }

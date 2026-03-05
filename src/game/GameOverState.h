@@ -1,13 +1,10 @@
 #pragma once
 #include "GameState.h"
-#include "../sdlutils/SDLUtils.h"
-
-class PausedState :
+class GameOverState :
     public GameState
 {
 public:
-    PausedState() {}
-    virtual ~PausedState() {}
+    GameOverState() {};
 
     void enter() override;
     void leave() override;

@@ -10,6 +10,12 @@
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 #include "../game/FighterUtils.h"
+#include "../components/Transform.h"
+#include "../game/PausedState.h"
+#include "../game/NewGameState.h"
+#include "../game/NewRoundState.h"
+#include "../game/RunningState.h"
+#include "../game/GameOverState.h"
 
 using ecs::Entity;
 using ecs::EntityManager;
@@ -21,6 +27,13 @@ Game::Game() :
 Game::~Game() {
 	delete _mngr;
 
+	delete _paused_state;
+	delete _runing_state;
+	delete _newgame_state;
+	delete _newround_state;
+	delete _gameover_state;
+
+
 	// release InputHandler if the instance was created correctly.
 	if (InputHandler::HasInstance())
 		InputHandler::Release();
@@ -28,9 +41,10 @@ Game::~Game() {
 	// release SLDUtil if the instance was created correctly.
 	if (SDLUtils::HasInstance())
 		SDLUtils::Release();
+
 }
 
-void Game::init() {
+bool Game::init() {
 
 	// initialize the SDL singleton
 	if (!SDLUtils::Init("Asteroids", 800, 600,
@@ -38,72 +52,62 @@ void Game::init() {
 
 		std::cerr << "Something went wrong while initializing SDLUtils"
 				<< std::endl;
-		return;
+		return false;
 	}
 
 	// initialize the InputHandler singleton
 	if (!InputHandler::Init()) {
 		std::cerr << "Something went wrong while initializing SDLHandler"
 				<< std::endl;
-		return;
-
+		return false;
 	}
 
+	return true;
+}
+
+void
+Game::initGame() {
 	// Create the manager
 	_mngr = new EntityManager();
-	_fighterUtils = new FighterUtils(_mngr);
-
-	_fighterUtils->create_fighter();
 
 	// create the game info entity
 	auto ginfo = _mngr->addEntity();
 	_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
 	ginfo->addComponent<GameCtrl>();
+
+	_fighterUtils = new FighterUtils();
+	_fighterUtils->create_fighter();
+
+	_paused_state = new PausedState();
+	_runing_state = new RunningState();
+	_newgame_state = new NewGameState();
+	_newround_state = new NewRoundState();
+	_gameover_state = new GameOverState();
+
+	_state = _newgame_state;
+
 }
 
 void Game::start() {
-
-	// a boolean to exit the loop
-	bool exit = false;
-
-	auto &ihdlr = ih();
-
-	// reset the time before starting - so we calculate correct
-	// delta-time in the first iteration
-	//
-	sdlutils().virtualTimer().resetTime();
-
+	bool exit = false; // exit boolean
+	
+	auto& ihdlr = ih(); // input handler
+	
+	auto& vt = sdlutils().virtualTimer(); // virutal timer to be able to pause the timer in PausedState	
+	
+	vt.resetTime(); // start counting from this instance
+	
 	while (!exit) {
-		// store the current time -- all game objects should use this time when
-		// then need to the current time. They also have accessed to the time elapsed
-		// between the last two calls to regCurrTime().
-		Uint32 startTime = sdlutils().virtualTimer().regCurrTime();
-
-		// refresh the input handler
-		ihdlr.refresh();
-
-		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
+		Uint32 startTime = vt.regCurrTime(); // register current time so all objects use the same time
+		ihdlr.refresh(); // refresh input
+		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) { // if escape key, exit game
 			exit = true;
 			continue;
 		}
-
-		_mngr->update();
-		_mngr->refresh();
-
-		checkCollisions();
-
-		sdlutils().clearRenderer();
-		_mngr->render();
-		sdlutils().presentRenderer();
-
-		_mngr->flush();
-
-		Uint32 frameTime = sdlutils().virtualTimer().currRealTime() - startTime;
-
-		if (frameTime < 10)
-			SDL_Delay(10 - frameTime);
+		_state->update(); // update current state
+		Uint32 frameTime = sdlutils().currRealTime() - startTime; // how much time since beginning of this "frame" 
+		if (frameTime < 10) SDL_Delay(10 - frameTime); // delay 
 	}
-
 }
 
 void Game::checkCollisions() {
@@ -131,8 +135,6 @@ void Game::checkCollisions() {
 					pTR->getHeight(), //
 					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
 				e->setAlive(false);
-				_mngr->getHandler(ecs::hdlr::GAMEINFO)->getComponent<GameCtrl>()->onStarEaten();
-
 			}
 		}
 	}

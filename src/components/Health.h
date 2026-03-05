@@ -2,6 +2,9 @@
 #include "../ecs/Component.h"
 #include "../utils/Vector2D.h"
 #include <cassert>
+#include "../sdlutils/Texture.h"
+
+class Transform;
 
 class Health : public ecs::Component
 {
@@ -23,7 +26,6 @@ public:
 private:
 	int _hp;
 	int _maxHp;
-	Transform* _tr;
 	const Texture* _tex;
 };
 
