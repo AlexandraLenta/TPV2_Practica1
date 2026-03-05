@@ -23,9 +23,7 @@ public:
 	virtual ~DeAcceleration() {
 	}
 
-	void init(float da, float l) {
-		_amount = da;
-		_limit = l;
+	void initComponent() override {
 		_tr = _ent->getComponent<Transform>();
 		assert(_tr != nullptr);
 	}

@@ -4,6 +4,7 @@
 #include "../ecs/Component.h"
 #include "../utils/Vector2D.h"
 #include <cassert>
+#include <iostream>
 
 class Transform: public ecs::Component {
 public:
@@ -66,6 +67,7 @@ public:
 
 	void update() override {
 		_pos = _pos + _vel;
+		std::cout << _pos.getX() << " " << _pos.getY() << std::endl;
 	}
 
 private:

@@ -7,7 +7,6 @@
 #include "../components/Transform.h"
 
 Health::Health(int hp) : _hp(hp), _maxHp(hp) {
-	_tex = &sdlutils().images().at("heart");
 }
 
 Health::~Health() {}
@@ -15,6 +14,7 @@ Health::~Health() {}
 void
 Health::initComponent() {
 	_hp = _maxHp;
+	_tex = &sdlutils().images().at("heart");
 }
 
 void
@@ -36,9 +36,10 @@ Health::getHP() {
 void
 Health::render() {
 	// TODO: render hp amount of hearts
-	SDL_FRect dest = build_sdlfrect(0, sdlutils().width() - _hp * _tex->width(), _tex->width(),
-		_tex->height());
+	_tex = &sdlutils().images().at("heart");
 
 	assert(_tex != nullptr);
-	_tex->render(dest);
+	_tex->render(0,0 );
+
+	//sdlutils().width() - _hp * _tex->width()
 }

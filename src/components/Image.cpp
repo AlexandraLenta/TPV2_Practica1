@@ -26,11 +26,9 @@ void Image::initComponent() {
 }
 
 void Image::render() {
-
 	SDL_FRect dest = build_sdlfrect(_tr->getPos(), _tr->getWidth(),
 			_tr->getHeight());
 
 	assert(_tex != nullptr);
 	_tex->render(dest, _tr->getRot());
-
 }

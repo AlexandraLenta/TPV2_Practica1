@@ -28,6 +28,7 @@ void RunningState::update() {
 
     //c. Update entities
     Game::Instance()->getMngr()->update();
+    Game::Instance()->getMngr()->flush();
 
     //d. Collisions
         // if fighter -> asteroid, remove health
@@ -36,7 +37,7 @@ void RunningState::update() {
         // if bullet -> asteroid, split asteroid, mark bullet as unused
 
     //e. render entities
-    Game::Instance()->getMngr()->render(); 
+    Game::Instance()->getMngr()->render();
 
     //f. remove dead entities
     Game::Instance()->getMngr()->refresh();

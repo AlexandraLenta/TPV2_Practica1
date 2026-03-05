@@ -15,7 +15,8 @@ FighterUtils::FighterUtils() : FighterFacade() {
 
 void
 FighterUtils::create_fighter() {
-	const auto& mngr = Game::Instance()->getMngr();
+	auto* mngr = Game::Instance()->getMngr();
+	
 	// create fighter
 	_fighter = mngr->addEntity();
 	mngr->setHandler(ecs::hdlr::FIGHTER, _fighter);
@@ -25,12 +26,12 @@ FighterUtils::create_fighter() {
 	
 	// add components
 
-	auto tr = _fighter->addComponent<Transform>(); // movement
 	auto w = fighterTexture.width();
 	auto h = fighterTexture.height();
 	auto x = (sdlutils().width() - w) / 2.0f;
 	auto y = (sdlutils().height() - h) / 2.0f;
-	tr->init(Vector2D(x, y), Vector2D(), w, h, 0.0f);
+
+	_fighter->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
 
 	_fighter->addComponent<FighterCtrl>(); // controller
 

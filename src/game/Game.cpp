@@ -108,8 +108,11 @@ void Game::start() {
 			continue;
 		}
 		sdlutils().clearRenderer();
+
 		_state->update(); // update current state
+		
 		sdlutils().presentRenderer();
+		
 		Uint32 frameTime = sdlutils().currRealTime() - startTime; // how much time since beginning of this "frame" 
 		if (frameTime < 10) SDL_Delay(10 - frameTime); // delay 
 	}

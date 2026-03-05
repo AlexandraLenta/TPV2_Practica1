@@ -22,7 +22,6 @@ void FighterCtrl::initComponent() {
 }
 
 void FighterCtrl::update() {
-
 	auto& ihldr = ih();
 
 	auto& vel_ = _tr->getVel();
