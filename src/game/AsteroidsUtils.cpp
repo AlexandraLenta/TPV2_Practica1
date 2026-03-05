@@ -22,13 +22,9 @@ void AsteroidsUtils::create_asteroids(int n) {
 
 void AsteroidsUtils::remove_all_asteroids() {
 
-    auto& mngr = Entity ->getMngr();
-    auto& asteroids = mngr.getEntities(ecs::grp::ASTEROIDS);
-    for (auto a : asteroids) {
-        a->setAlive(false);
-    }
+    auto& mngr = _entity ->getMngr();//COMO SE COGE ESTA  MIERDAD
 
-    mngr.refresh();
+    _mngr->getMngr().refresh();//AAAAAAA
 }
 
 void AsteroidsUtils::split_astroid(ecs::entity_t a) {
