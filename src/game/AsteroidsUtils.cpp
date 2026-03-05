@@ -18,11 +18,11 @@ AsteroidsUtils::~AsteroidsUtils()
 }
 
 void AsteroidsUtils::create_asteroids(int n) {
-
+    _nrOfAsteroids += n;
 }
 
 void AsteroidsUtils::remove_all_asteroids() {
-    _mngr->refresh();
+    _nrOfAsteroids = 0;
 }
 
 void AsteroidsUtils::split_asteroid(ecs::Entity a) {

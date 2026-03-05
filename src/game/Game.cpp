@@ -10,6 +10,7 @@
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 #include "../game/FighterUtils.h"
+#include "../game/AsteroidsUtils.h"
 #include "../components/Transform.h"
 #include "../game/PausedState.h"
 #include "../game/NewGameState.h"
@@ -78,6 +79,8 @@ Game::initGame() {
 	_fighterUtils = new FighterUtils();
 	_fighterUtils->create_fighter();
 
+	_asteroidUtils = new AsteroidsUtils();
+
 	_paused_state = new PausedState();
 	_runing_state = new RunningState();
 	_newgame_state = new NewGameState();
@@ -104,7 +107,9 @@ void Game::start() {
 			exit = true;
 			continue;
 		}
+		sdlutils().clearRenderer();
 		_state->update(); // update current state
+		sdlutils().presentRenderer();
 		Uint32 frameTime = sdlutils().currRealTime() - startTime; // how much time since beginning of this "frame" 
 		if (frameTime < 10) SDL_Delay(10 - frameTime); // delay 
 	}

@@ -9,7 +9,7 @@ class NewRoundState :
     public GameState
 {
 public:
-    NewRoundState() {}
+    NewRoundState();
     virtual ~NewRoundState() {}
 
     void enter() override;
@@ -17,7 +17,6 @@ public:
     void update() override;
 
 private:
-    AsteroidsUtils* _asteroidsUtils;
-    FighterFacade* _fighterFacade;
+    const Texture* _tex;
 };
 

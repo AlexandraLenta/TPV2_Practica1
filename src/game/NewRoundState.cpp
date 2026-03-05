@@ -5,20 +5,24 @@
 #include "Game.h"
 #include "../sdlutils/InputHandler.h"
 
+NewRoundState::NewRoundState() {
+    _tex = &sdlutils().msgs().at("round_start");
+}
 
 void NewRoundState::enter() {}
 
-void NewRoundState::leave() {}
+void NewRoundState::leave() {
+    Game::Instance()->getFighterUtils()->reset_fighter();
+    Game::Instance()->getAsteroidUtils()->remove_all_asteroids();
+    Game::Instance()->getAsteroidUtils()->create_asteroids(10);
+}
 
 void NewRoundState::update() {
+    assert(_tex != nullptr);
 
-    sdlutils().msgs().at("press ENTER to start the round").render(200, 300);
+    _tex->render(sdlutils().width()/2 - _tex->width()/2, sdlutils().height()/2 - _tex->height()/2);
 
     if (ih().isKeyDown(SDL_SCANCODE_RETURN)) {
-        _fighterFacade->reset_fighter();
-        _asteroidsUtils->remove_all_asteroids();
-        _asteroidsUtils->create_asteroids(10);
-
         Game::Instance()->setState(Game::RUNNING);
     }
 }

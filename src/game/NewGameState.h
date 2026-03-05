@@ -1,12 +1,13 @@
 #pragma once
 #include "GameState.h"
+#include "../sdlutils/Texture.h"
 
 class FighterUtils;
 
 class NewGameState :public GameState
 {
 public:
-    NewGameState() {}
+    NewGameState();
     virtual ~NewGameState() {}
 
     void enter() override;
@@ -14,6 +15,6 @@ public:
     void update() override;
 
 private:
-    FighterUtils* _fighterUtils;
+    const Texture* _tex;
 };
 

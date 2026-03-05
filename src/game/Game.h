@@ -8,7 +8,8 @@ namespace ecs {
 class EntityManager;
 }
 
-class FighterUtils;
+class FighterFacade;
+class AsteroidsFacade;
 
 class Game : public Singleton<Game> {
 public:
@@ -20,6 +21,14 @@ public:
 
 	ecs::EntityManager* getMngr() {
 		return _mngr;
+	}
+
+	FighterFacade* getFighterUtils() {
+		return _fighterUtils;
+	}
+
+	AsteroidsFacade* getAsteroidUtils() {
+		return _asteroidUtils;
 	}
 
 	enum State {
@@ -53,7 +62,8 @@ public:
 private:
 	void checkCollisions();
 	ecs::EntityManager *_mngr;
-	FighterUtils* _fighterUtils;
+	FighterFacade* _fighterUtils;
+	AsteroidsFacade* _asteroidUtils;
 
 	GameState* _state;
 	GameState* _paused_state;

@@ -4,20 +4,23 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/InputHandler.h"
 
+NewGameState::NewGameState() {
+    _tex = &sdlutils().msgs().at("game_start");
+}
+
 void NewGameState::enter() {
-    // nada especial
 }
 
 void NewGameState::leave() {
-    // nada especial
+    Game::Instance()->getFighterUtils()->reset_lives();
 }
 
 void NewGameState::update() {
+    assert(_tex != nullptr);
 
-    sdlutils().msgs().at("press any key to start a new game").render(200, 300);
+    _tex->render(sdlutils().width() / 2 - _tex->width()/2, sdlutils().height() / 2 - _tex->height()/2);
 
-    if (ih().keyDownEvent()) { //PERO PQ NO FUNCIONA 
-        _fighterUtils -> reset_lives();
+    if (ih().keyDownEvent()) { 
         Game::Instance()->setState(Game::NEWROUND);
     }
 }

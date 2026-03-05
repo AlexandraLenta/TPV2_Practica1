@@ -12,7 +12,6 @@ public:
     void split_asteroid(ecs::Entity a) override;
 
 private:
-
     ecs::EntityManager* _mngr;
     ecs::Entity* _entity;
 

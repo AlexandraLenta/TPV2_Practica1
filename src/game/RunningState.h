@@ -18,9 +18,5 @@ public:
 
 private:
     Uint32 _lastAsteroidTime;
-    SDLUtils* _sdlutils;
-    AsteroidsFacade* _AsteroidsFacade;
-    ecs::EntityManager* _mngr;
-    ecs::Entity* _entity;
 };
 
