@@ -14,13 +14,16 @@
 	IMAGE, \
 	FIGHTERCTRL, \
 	GAMECTRL, \
-	STOPONBORDER
+	STOPONBORDER, \
+    FOLLOW, \
+	TELEPORTONEXIT, \
 
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STARS
+	STARS, \
+	ASTEROIDS
 
 // Handlers list - must have at least one element
 //

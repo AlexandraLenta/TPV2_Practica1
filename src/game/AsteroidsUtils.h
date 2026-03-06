@@ -5,7 +5,7 @@
 
 class AsteroidsUtils : public AsteroidsFacade {
 public:
-    AsteroidsUtils();
+    AsteroidsUtils(ecs::EntityManager* mngr);
     virtual ~AsteroidsUtils();
 
     void create_asteroids(int n) override;

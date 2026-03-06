@@ -1,7 +1,7 @@
 #pragma once
 #include "../ecs/Component.h"
 
-class ImageWithFrames : public ecs::Component
+class MaterialConsistency : public ecs::Component
 {
 };
 

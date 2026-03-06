@@ -1,7 +1,6 @@
 #pragma once
 #include "../ecs/Component.h"
-
-class ImageWithFrames : public ecs::Component
+class TowardDestination : public ecs::Component
 {
 };
 

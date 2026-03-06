@@ -7,11 +7,10 @@
 #include "../components/ImageWithFrames.h"
 #include "../components/Generations.h"
 #include "../components/ShowAtOppositeSide.h"
+#include "../components/TowardDestination.h"
 
 
-AsteroidsUtils::AsteroidsUtils() 
-{
-}
+AsteroidsUtils::AsteroidsUtils(ecs::EntityManager* mngr) : _mngr(mngr) {}
 
 AsteroidsUtils::~AsteroidsUtils() 
 {
@@ -68,11 +67,39 @@ void AsteroidsUtils::create_asteroids(int n) {
 void AsteroidsUtils::remove_all_asteroids() {
     //_nrOfAsteroids = 0;
 
+    auto& asteroids = _mgnr->getEntities(ecs::grp::ASTEROIDS);
+
+    for (auto* e : asteroids) {
+        e->setAlive(false);
+    }
 }
 
-void AsteroidsUtils::split_asteroid(ecs::Entity a) {
+void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
 
     //auto tr = _entity->addComponent<Transform>();
+   //_entity->setAlive(false);
+    auto* tr = a->getComponent<Transform>();
+    auto* g = a->getComponent<Generations>();
+    int gen = g->getGenerations();
+    
+    a->setAlive(false);
 
-    //_entity->setAlive(false);
+    Vector2D pos = tr->getPos();
+    Vector2D vel = tr->getVel();
+
+    float w = tr->getWidth();
+    float h = tr->getHeight();
+
+    bool follow = a->hasComponent<Follow>();
+    bool toward = a->hasComponent<TowardDestination>();
+    bool teleport = a->hasComponent<TeleportOnExit>();
+
+    bool material = a->hasComponent<MaterialConsistency>();
+    int materialValue = 0;
+
+    if (material) 
+    {
+        materialValue = a->getComponent<MaterialConsistency>()->getConsistency();
+    }
+
 }
