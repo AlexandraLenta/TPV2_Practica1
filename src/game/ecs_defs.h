@@ -17,6 +17,9 @@
 	STOPONBORDER, \
     FOLLOW, \
 	TELEPORTONEXIT, \
+	GENERATIONS, \
+MATERIALCONSISTENCY, \
+IMAGEWITHFRAMES
 
 
 // Groups list - must have at least one element

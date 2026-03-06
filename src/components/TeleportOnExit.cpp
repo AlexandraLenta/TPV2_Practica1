@@ -30,5 +30,7 @@ void TeleportOnExit::update() {
         case 2: pos = Vector2D(rand() % w, 0); break;
         case 3: pos = Vector2D(rand() % w, h); break;
         }
+
+        //como se hacer un set position?
     }
 }
