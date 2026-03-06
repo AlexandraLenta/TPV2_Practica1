@@ -16,9 +16,9 @@ void RunningState::leave() {}
 void RunningState::update() {
     auto& ihdlr = ih();
     //a. if there are no asteroids, GameOver
-    if (Game::Instance()->getAsteroidUtils()->nrOfAsteroids() <= 0) {
-        Game::Instance()->setState(Game::GAMEOVER);
-    }
+    //if (Game::Instance()->getAsteroidUtils()->nrOfAsteroids() <= 0) {
+    //    Game::Instance()->setState(Game::GAMEOVER);
+    //}
 
     //b. if press P, pause
     if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_P)) {

@@ -67,7 +67,6 @@ public:
 
 	void update() override {
 		_pos = _pos + _vel;
-		std::cout << _pos.getX() << " " << _pos.getY() << std::endl;
 	}
 
 private:

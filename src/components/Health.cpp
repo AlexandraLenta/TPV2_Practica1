@@ -36,7 +36,6 @@ Health::getHP() {
 void
 Health::render() {
 	// TODO: render hp amount of hearts
-	_tex = &sdlutils().images().at("heart");
 
 	assert(_tex != nullptr);
 	_tex->render(0,0 );
