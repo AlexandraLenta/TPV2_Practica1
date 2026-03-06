@@ -6,7 +6,7 @@ public:
 
     __CMPID_DECL__(ecs::cmp::MATERIALCONSISTENCY);
 
-    MaterialConsistency();
+    MaterialConsistency(int cons);
     virtual ~MaterialConsistency();
 
     void initComponent() override;

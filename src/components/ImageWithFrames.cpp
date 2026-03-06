@@ -3,14 +3,14 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Transform.h"
 
-ImageWithFrames::ImageWithFrames(Texture* tex, int rows, int cols) : _tex(tex), _rows(rows),_cols(cols),_frame(0)
+ImageWithFrames::ImageWithFrames(const Texture* tex, int rows, int cols) : _tex(tex), _rows(rows),_cols(cols), _frame(0)
 {
-	_frameW = _tex->width() / _cols;
-	_frameH = _tex->height() / _rows;
+	float frameW = _tex->width() / _cols;
+	float frameH = _tex->height() / _rows;
 
 	for (int i = 0; i < _rows; i++) {
 		for (int j = 0; j < _cols; j++) {
-			_srcRects.push_back(SDL_FRect{i * _frameW, j* _frameH , _frameW, _frameH });
+			_srcRects.push_back(SDL_FRect{i * frameW, j* frameH, frameW, frameH });
 		}
 	}
 }
@@ -35,7 +35,7 @@ ImageWithFrames::update() {
 void
 ImageWithFrames::render() {
 	// dest rect for the current frame
-	SDL_FRect dest = build_sdlfrect(_tr->getPos(), _frameW, _frameH);
+	SDL_FRect dest = build_sdlfrect(_tr->getPos(), _tr->getWidth(), _tr->getHeight());
 	
 	// render the src frame rect to the dest rect
 	_tex->render(_srcRects[_frame], dest);

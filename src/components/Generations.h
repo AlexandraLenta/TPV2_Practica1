@@ -11,7 +11,7 @@ public:
 
     int getGenerations();
     void setGenerations(int g);
-    void increaseGeneration();
+    void decreaseGeneration();
 
 private:
     int _generations;

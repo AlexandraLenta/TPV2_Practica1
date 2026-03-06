@@ -2,15 +2,13 @@
 #include "../ecs/Entity.h"
 #include "../sdlutils/SDLUtils.h"
 
-MaterialConsistency::MaterialConsistency() :_consistency(0), _lastCheck(0) {
+MaterialConsistency::MaterialConsistency(int cons) :_consistency(cons), _lastCheck(0) {
 }
 
 MaterialConsistency::~MaterialConsistency() {
 }
 
 void MaterialConsistency::initComponent() {
-
-    _consistency = 10 + rand() % 91; // random number between 10 and 100 
     _lastCheck = sdlutils().currTime();
 }
 

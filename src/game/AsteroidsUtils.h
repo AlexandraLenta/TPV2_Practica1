@@ -2,6 +2,7 @@
 #include "AsteroidsFacade.h"
 #include "../ecs/Entity.h"
 #include "../utils/Vector2D.h"
+#include "../sdlutils/Texture.h"
 
 class AsteroidsUtils : public AsteroidsFacade {
 public:
@@ -13,16 +14,11 @@ public:
     void split_asteroid(ecs::Entity* a) override;
 
 private:
-    ecs::EntityManager* _mngr;
-    ecs::Entity* _entity;
+    const Texture* _asteroidTex;
+    const Texture* _goldAsteroidTex;
+    int _rows, _cols;
 
-    ecs::Entity* spawnAsteroid(const Vector2D& pos,const Vector2D& vel,int generations,
-        bool follow,
-        bool toward,
-        bool teleport,
-        bool material,
-        int materialValue
-    );
+    ecs::Entity* spawnAsteroid(const Vector2D& pos,const Vector2D& vel,int generations);
 
 };
 

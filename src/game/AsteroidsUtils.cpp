@@ -10,16 +10,22 @@
 #include "../components/TowardDestination.h"
 #include "../game/Game.h"
 #include "../ecs/EntityManager.h"
+#include "../ecs/Entity.h"
 
 
-AsteroidsUtils::AsteroidsUtils() {}
+AsteroidsUtils::AsteroidsUtils() {
+    _asteroidTex = &sdlutils().images().at("asteroid");
+    _goldAsteroidTex = &sdlutils().images().at("asteroid_gold");
+    _rows = 5;
+    _cols = 6;
+}
 
 AsteroidsUtils::~AsteroidsUtils() 
 {
+
 }
 
 void AsteroidsUtils::create_asteroids(int n) {
-    //_nrOfAsteroids += n;
 
     auto& rng = sdlutils().rand();
     int width = sdlutils().width();
@@ -28,47 +34,39 @@ void AsteroidsUtils::create_asteroids(int n) {
     Vector2D screenCenter(width / 2, height / 2);
 
     for (int i = 0; i < n; ++i) { // for each asteroid
-        int side = rng.nextInt(0, 4);// coger borde
+
+        // --------- TRANSFORM -------------
+        int side = rng.nextInt(0, 4); // take border
 
         Vector2D spawnPos;
 
         if (side == 0) //left
-        {
             spawnPos = { 0.0f, (float)rng.nextInt(0, height) };
-        }
-        else if (side == 1) //right
-        {
-            spawnPos = { (float)width, (float)rng.nextInt(0, height) };
-        }
-        else if (side == 2) //top
-        {
-            spawnPos = { (float)rng.nextInt(0, width), 0.0f };
-        }
-        else //boton
-        {
-            spawnPos = { (float)rng.nextInt(0, width), (float)height };
-        }
         
-        Vector2D centerPos = (screenCenter + Vector2D{rng.nextInt(-100, 101), rng.nextInt(-100, 101)}).normalize();
+        else if (side == 1) //right
+            spawnPos = { (float)width, (float)rng.nextInt(0, height) };
+        
+        else if (side == 2) //top
+            spawnPos = { (float)rng.nextInt(0, width), 0.0f };
+        
+        else //bottom
+            spawnPos = { (float)rng.nextInt(0, width), (float)height };
+        
+
+        Vector2D centerPos = (screenCenter + Vector2D{(float)rng.nextInt(-100, 101), (float)rng.nextInt(-100, 101)}).normalize();
 
         float speed = rng.nextInt(1, 10)/10.0f;
         Vector2D velocity = (centerPos - spawnPos) * speed; // asteroid speed
 
+        // --------- GENERATIONS -------------
+
         int generations = rng.nextInt(1, 4); // generate generation
 
-        bool follow = rng.nextInt(0, 2) == 0; //50% prob de seguir al caza
-        bool toward = (!follow && rng.nextInt(0, 2) == 0); // Si no follow, 50% de toward
-        bool teleport = rng.nextInt(0, 2) == 0; // 50% de teletransportarse
-
-        bool material = rng.nextInt(0, 2) == 0;// 50% de tener consistencia
-        int materialValue = material ? rng.nextInt(10, 101) : 0;
-
+        spawnAsteroid(spawnPos, velocity, generations);
     }
 }
 
 void AsteroidsUtils::remove_all_asteroids() {
-    //_nrOfAsteroids = 0;
-
     auto& asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
 
     for (auto* e : asteroids) {
@@ -76,46 +74,74 @@ void AsteroidsUtils::remove_all_asteroids() {
     }
 }
 
-void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
-
-    //auto tr = _entity->addComponent<Transform>();
-   //_entity->setAlive(false);
-    auto* tr = a->getComponent<Transform>();
-    auto* g = a->getComponent<Generations>();
-    int gen = g->getGenerations();
-    
-    a->setAlive(false);// asteroid original muere
-
-    Vector2D pos = tr->getPos();
-    Vector2D vel = tr->getVel();
-
-    float w = tr->getWidth();
-    float h = tr->getHeight();
-
-    bool follow = a->hasComponent<Follow>();
-    bool toward = a->hasComponent<TowardDestination>();
-    bool teleport = a->hasComponent<TeleportOnExit>();
-
-    bool material = a->hasComponent<MaterialConsistency>();
-    int materialValue = 0;
-
-    if (material) 
-    {
-        materialValue = a->getComponent<MaterialConsistency>()->getConsistency(); //huuh
-    }
-
+ecs::Entity* AsteroidsUtils::spawnAsteroid(const Vector2D& pos, const Vector2D& vel, int generations) {
     auto& rng = sdlutils().rand();
 
-    for (int i = 0; i < 2; ++i) 
-    {
+    auto* mngr = Game::Instance()->getMngr();
 
-        float angle = rng.nextInt(-30, 30); //angel random btween 30 and -30
+    // create entity
+    ecs::Entity* asteroid = mngr->addEntity();
+    mngr->setHandler(ecs::hdlr::ASTEROID, asteroid);
 
-        Vector2D newVel = vel.rotate(angle) * 1.1f; //rotar aleatoriamente y aumentada un 10%
-        Vector2D offset(rng.nextInt(-(int)w, (int)w),rng.nextInt(-(int)h, (int)h)); // offset basado en el tamaño
+    float w = _asteroidTex->width();
+    float h = _asteroidTex->height();
 
-        Vector2D newPos = pos + offset;
+    asteroid->addComponent<Transform>(pos, vel, (w / _cols) * generations/2, (h / _rows) * generations / 2, 0.0f); // transform
+    asteroid->addComponent<Generations>(generations); // generations
 
+    if (rng.nextInt(0, 2)) { // decide border behavior, if its 1 (true) add show at opposite side
+        asteroid->addComponent<ShowAtOppositeSide>();
+    }
+    else { // if false (0) add teleport on exit
+        asteroid->addComponent<TeleportOnExit>();
     }
 
+    const Texture* texToUse = _asteroidTex;
+
+    int follow = rng.nextInt(0, 3);
+    if (!follow) { // decide route. if 0 (false) go towards destination
+        asteroid->addComponent<TowardDestination>();
+        texToUse = _goldAsteroidTex;
+    }
+    else if (follow == 1) { // if 1 follow player
+        asteroid->addComponent<Follow>();
+    } // if 2 (none of the above), dont add anything
+
+    asteroid->addComponent<ImageWithFrames>(texToUse, _rows, _cols); // animation/image & frames
+
+    if (rng.nextInt(0, 2)) { // if 1 (true) add material consistency
+        asteroid->addComponent<MaterialConsistency>(10 + rand() % 91); // random number between 10 and 100
+    } // else don't add anything
+
+    return asteroid;
+}
+
+void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
+    const auto& genComp = a->getComponent<Generations>();
+
+    genComp->decreaseGeneration();
+
+    auto generations = genComp->getGenerations();
+    
+    if (generations <= 0)
+        return;
+
+    const auto& tr = a->getComponent<Transform>();
+    auto p = tr->getPos();
+    auto v = tr->getVel();
+    auto w = tr->getWidth();
+    auto h = tr->getHeight();
+
+    int r = sdlutils().rand().nextInt(0, 360);
+    Vector2D pos = p + v.rotate(r) * 2 * std::max(w, h);
+    Vector2D vel = v.rotate(r) * 1.1f;
+
+    ecs::Entity* asteroid = spawnAsteroid(pos, vel, generations);
+
+    if (a->hasComponent<MaterialConsistency>()) {
+        asteroid->addComponent<MaterialConsistency>(a->getComponent<MaterialConsistency>()->getConsistency());
+    }
+    else {
+        asteroid->removeComponent<MaterialConsistency>();
+    }
 }

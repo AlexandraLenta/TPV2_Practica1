@@ -13,7 +13,7 @@ public:
 
     __CMPID_DECL__(ecs::cmp::IMAGEWITHFRAMES);
 
-    ImageWithFrames(Texture* tex, int rows, int cols);
+    ImageWithFrames(const Texture* tex, int rows, int cols);
     virtual ~ImageWithFrames();
 
     void initComponent() override;
@@ -23,8 +23,7 @@ public:
 
 private:
     int _rows, _cols, _frame, _lastChangeTime = 0;
-    float _frameW, _frameH;
-    Texture* _tex;
+    const Texture* _tex;
     Transform* _tr;
     std::vector<SDL_FRect> _srcRects;
 

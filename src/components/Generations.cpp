@@ -14,6 +14,6 @@ void Generations::setGenerations(int g) {
     _generations = g;
 }
 
-void Generations::increaseGeneration() {
-    _generations++;
+void Generations::decreaseGeneration() {
+    _generations--;
 }

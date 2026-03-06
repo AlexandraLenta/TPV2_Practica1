@@ -33,4 +33,5 @@
 //
 #define _HDLRS_LIST_ \
     FIGHTER, \
+	ASTEROID, \
 	GAMEINFO
