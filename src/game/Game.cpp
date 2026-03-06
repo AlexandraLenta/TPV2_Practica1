@@ -101,7 +101,8 @@ void Game::start() {
 	vt.resetTime(); // start counting from this instance
 	
 	while (!exit) {
-		Uint32 startTime = vt.regCurrTime(); // register current time so all objects use the same time
+		Uint32 startTime = vt.currRealTime();
+		vt.regCurrTime(); // register current time so all objects use the same time
 		
 		ihdlr.refresh(); // refresh input
 
@@ -115,7 +116,7 @@ void Game::start() {
 		
 		sdlutils().presentRenderer();
 		
-		Uint32 frameTime = sdlutils().currRealTime() - startTime; // how much time since beginning of this "frame" 
+		Uint32 frameTime = vt.currRealTime() - startTime; // how much time since beginning of this "frame" 
 		if (frameTime < 10) SDL_Delay(10 - frameTime); // delay 
 
 		//std::cout << sdlutils().virtualTimer().deltaTime() << '\n';
