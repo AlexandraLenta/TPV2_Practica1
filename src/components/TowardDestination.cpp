@@ -9,8 +9,6 @@ void
 TowardDestination::initComponent() {
 	_tr = _ent->getComponent<Transform>();
 	assert(_tr != nullptr);
-	
-
 }
 
 void

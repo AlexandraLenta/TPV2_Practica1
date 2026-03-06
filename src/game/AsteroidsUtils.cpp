@@ -27,16 +27,14 @@ void AsteroidsUtils::create_asteroids(int n) {
 
     Vector2D screenCenter(width / 2, height / 2);
 
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) { // for each asteroid
         int side = rng.nextInt(0, 4);// coger borde
 
         Vector2D spawnPos;
 
         if (side == 0) //left
         {
-            spawnPos = {
-            0.0f, (float)rng.nextInt(0, height) 
-        };
+            spawnPos = { 0.0f, (float)rng.nextInt(0, height) };
         }
         else if (side == 1) //right
         {
@@ -50,12 +48,13 @@ void AsteroidsUtils::create_asteroids(int n) {
         {
             spawnPos = { (float)rng.nextInt(0, width), (float)height };
         }
-        Vector2D direction = (screenCenter - spawnPos).normalize();// vector pal centro
+        
+        Vector2D centerPos = (screenCenter + Vector2D{rng.nextInt(-100, 101), rng.nextInt(-100, 101)}).normalize();
 
-        float speed = rng.nextInt(1, 6);
-        Vector2D velocity = direction * speed;
+        float speed = rng.nextInt(1, 10)/10.0f;
+        Vector2D velocity = (centerPos - spawnPos) * speed; // asteroid speed
 
-        int generations = rng.nextInt(1, 4);
+        int generations = rng.nextInt(1, 4); // generate generation
 
         bool follow = rng.nextInt(0, 2) == 0; //50% prob de seguir al caza
         bool toward = (!follow && rng.nextInt(0, 2) == 0); // Si no follow, 50% de toward
