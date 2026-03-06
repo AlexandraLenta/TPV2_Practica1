@@ -23,44 +23,45 @@ void AsteroidsUtils::create_asteroids(int n) {
     int width = sdlutils().width();
     int height = sdlutils().height();
 
-    Vector2D screenCenter(width / 2.0f, height / 2.0f);
+    Vector2D screenCenter(width / 2, height / 2);
 
     for (int i = 0; i < n; ++i) {
         int side = rng.nextInt(0, 4);// coger borde
 
         Vector2D spawnPos;
 
-        if (side == 0) 
+        if (side == 0) //left
+        {
             spawnPos = {
             0.0f, (float)rng.nextInt(0, height) 
         };
-        else if (side == 1) 
+        }
+        else if (side == 1) //right
         {
             spawnPos = { (float)width, (float)rng.nextInt(0, height) };
         }
-        else if (side == 2) 
+        else if (side == 2) //top
         {
             spawnPos = { (float)rng.nextInt(0, width), 0.0f };
         }
-        else 
+        else //boton
         {
             spawnPos = { (float)rng.nextInt(0, width), (float)height };
         }
-        Vector2D direction = (screenCenter - spawnPos).normalize();// vector pal zona central
+        Vector2D direction = (screenCenter - spawnPos).normalize();// vector pal centro
 
         float speed = rng.nextInt(1, 6);
         Vector2D velocity = direction * speed;
 
         int generations = rng.nextInt(1, 4);
 
-        bool follow = rng.nextInt(0, 2) == 0;
-        bool toward = (!follow && rng.nextInt(0, 2) == 0);
-        bool teleport = rng.nextInt(0, 2) == 0;
+        bool follow = rng.nextInt(0, 2) == 0; //50% prob de seguir al caza
+        bool toward = (!follow && rng.nextInt(0, 2) == 0); // Si no follow, 50% de toward
+        bool teleport = rng.nextInt(0, 2) == 0; // 50% de teletransportarse
 
-        bool material = rng.nextInt(0, 2) == 0;
+        bool material = rng.nextInt(0, 2) == 0;// 50% de tener consistencia
         int materialValue = material ? rng.nextInt(10, 101) : 0;
 
-        spawnAsteroid(spawnPos,velocity,generations,follow,toward,teleport,material,materialValue);
     }
 }
 
@@ -82,7 +83,7 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
     auto* g = a->getComponent<Generations>();
     int gen = g->getGenerations();
     
-    a->setAlive(false);
+    a->setAlive(false);// asteroid original muere
 
     Vector2D pos = tr->getPos();
     Vector2D vel = tr->getVel();
@@ -99,7 +100,21 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
 
     if (material) 
     {
-        materialValue = a->getComponent<MaterialConsistency>()->getConsistency();
+        materialValue = a->getComponent<MaterialConsistency>(); //huuh
+    }
+
+    auto& rng = sdlutils().rand();
+
+    for (int i = 0; i < 2; ++i) 
+    {
+
+        float angle = rng.nextInt(-30, 30); //angel random btween 30 and -30
+
+        Vector2D newVel = vel.rotate(angle) * 1.1f; //rotar aleatoriamente y aumentada un 10%
+        Vector2D offset(rng.nextInt(-(int)w, (int)w),rng.nextInt(-(int)h, (int)h)); // offset basado en el tamaño
+
+        Vector2D newPos = pos + offset;
+
     }
 
 }
