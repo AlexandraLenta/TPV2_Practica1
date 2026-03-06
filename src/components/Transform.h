@@ -5,6 +5,7 @@
 #include "../utils/Vector2D.h"
 #include <cassert>
 #include <iostream>
+#include "../sdlutils/SDLUtils.h"
 
 class Transform: public ecs::Component {
 public:
@@ -76,4 +77,3 @@ private:
 	float _height;
 	float _rot;
 };
-

@@ -102,7 +102,9 @@ void Game::start() {
 	
 	while (!exit) {
 		Uint32 startTime = vt.regCurrTime(); // register current time so all objects use the same time
+		
 		ihdlr.refresh(); // refresh input
+
 		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) { // if escape key, exit game
 			exit = true;
 			continue;
@@ -115,7 +117,7 @@ void Game::start() {
 		
 		Uint32 frameTime = sdlutils().currRealTime() - startTime; // how much time since beginning of this "frame" 
 		if (frameTime < 10) SDL_Delay(10 - frameTime); // delay 
-	}
+ }
 }
 
 void Game::checkCollisions() {

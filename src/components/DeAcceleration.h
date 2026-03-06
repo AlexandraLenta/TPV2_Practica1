@@ -34,7 +34,7 @@ public:
 
 	void update() override {
 		Vector2D res = _tr->getVel() * _amount;
-		if (res.getX() <= _limit && res.getY() <= _limit)
+		if (abs(res.getX()) <= _limit && abs(res.getY()) <= _limit)
 			_tr->setVel({ 0,0 });
 		else 
 			_tr->setVel(_tr->getVel() * _amount);

@@ -35,7 +35,7 @@ FighterUtils::create_fighter() {
 
 	_fighter->addComponent<FighterCtrl>(); // controller
 
-	_fighter->addComponent<DeAcceleration>(0.995f, 0.05f); // deacceleration
+	_fighter->addComponent<DeAcceleration>(0.995f, 0.005f); // deacceleration
 
 	_fighter->addComponent<Gun>(&fireTexture); // gun
 
