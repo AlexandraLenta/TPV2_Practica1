@@ -1,6 +1,10 @@
 #pragma once
 #include "../ecs/Component.h"
-#include "../components/Transform.h"
+#include "../sdlutils/Texture.h"
+
+class Transform;
+
+const int FRAME_TIME = 50;
 
 class ImageWithFrames : public ecs::Component
 {
@@ -14,7 +18,8 @@ public:
     void initComponent() override;
 
 private:
-
+    int _rows, _cols, _frame, _lastChangeTime;
+    Texture* _tex;
     Transform* _tr;
 
 };

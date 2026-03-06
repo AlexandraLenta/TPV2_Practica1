@@ -8,9 +8,11 @@
 #include "../components/Generations.h"
 #include "../components/ShowAtOppositeSide.h"
 #include "../components/TowardDestination.h"
+#include "../game/Game.h"
+#include "../ecs/EntityManager.h"
 
 
-AsteroidsUtils::AsteroidsUtils(ecs::EntityManager* mngr) : _mngr(mngr) {}
+AsteroidsUtils::AsteroidsUtils() {}
 
 AsteroidsUtils::~AsteroidsUtils() 
 {
@@ -68,7 +70,7 @@ void AsteroidsUtils::create_asteroids(int n) {
 void AsteroidsUtils::remove_all_asteroids() {
     //_nrOfAsteroids = 0;
 
-    auto& asteroids = _mgnr->getEntities(ecs::grp::ASTEROIDS);
+    auto& asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
 
     for (auto* e : asteroids) {
         e->setAlive(false);
@@ -100,7 +102,7 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
 
     if (material) 
     {
-        materialValue = a->getComponent<MaterialConsistency>(); //huuh
+        materialValue = a->getComponent<MaterialConsistency>()->getConsistency(); //huuh
     }
 
     auto& rng = sdlutils().rand();

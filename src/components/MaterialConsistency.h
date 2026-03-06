@@ -12,8 +12,12 @@ public:
     void initComponent() override;
     void update() override;
 
+    int getConsistency() const{
+        return _consistency;
+    }
+
 private:
     int _consistency;
-    Uint32 _lastCheck;
+    int _lastCheck;
 };
 
