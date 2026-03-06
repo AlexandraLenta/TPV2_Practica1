@@ -62,7 +62,7 @@ public:
 	inline Uint64 regCurrTime() {
 		if (!_paused) {
 			Uint64 currTime = currRealTime();
-			_deltaTime = _currTime - currTime;
+			_deltaTime = currTime-_currTime;
 			_currTime = currTime;
 		}
 		return _currTime;

@@ -13,6 +13,9 @@ public:
     void reset_fighter() override;
     void reset_lives() override;
     int update_lives(int n) override;
+    ecs::Entity* getFighter() override {
+        return _fighter;
+    }
 
 private:
     ecs::EntityManager* _mngr;

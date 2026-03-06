@@ -18,7 +18,7 @@ void NewGameState::leave() {
 void NewGameState::update() {
     assert(_tex != nullptr);
 
-    _tex->render(sdlutils().width() / 2 - _tex->width()/2, sdlutils().height() / 2 - _tex->height()/2);
+    _tex->render((sdlutils().width() - _tex->width())/2, (sdlutils().height() - _tex->height())/2);
 
     if (ih().keyDownEvent()) { 
         Game::Instance()->setState(Game::NEWROUND);

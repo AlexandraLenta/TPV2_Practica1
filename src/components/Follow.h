@@ -1,12 +1,14 @@
 #pragma once
 #include "../ecs/Component.h"
-#include "Transform.h"
+
+class Transform;
 
 class Follow : public ecs::Component
 {
 public:
     __CMPID_DECL__(ecs::cmp::FOLLOW)
-    Follow(float turnSpeed = 1.0f);
+
+    Follow();
     void initComponent() override;
     void update() override;
 

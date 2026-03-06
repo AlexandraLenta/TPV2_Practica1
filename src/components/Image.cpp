@@ -26,7 +26,7 @@ void Image::initComponent() {
 }
 
 void Image::render() {
-	SDL_FRect dest = build_sdlfrect(_tr->getPos()	, _tr->getWidth(),
+	SDL_FRect dest = build_sdlfrect(_tr->getPos(), _tr->getWidth(),
 			_tr->getHeight());
 
 	assert(_tex != nullptr);

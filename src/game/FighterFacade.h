@@ -1,11 +1,13 @@
 #pragma once
+#include "../ecs/Entity.h"
 
 class FighterFacade {
 public:
 	FighterFacade() {}
 	virtual ~FighterFacade() {}
-	void virtual create_fighter() = 0;
-	void virtual reset_fighter() = 0;
-	void virtual reset_lives() = 0;
-	int virtual update_lives(int n) = 0;
+	virtual void create_fighter() = 0;
+	virtual void reset_fighter() = 0;
+	virtual void reset_lives() = 0;
+	virtual int update_lives(int n) = 0;
+	virtual ecs::Entity* getFighter() = 0;
 };

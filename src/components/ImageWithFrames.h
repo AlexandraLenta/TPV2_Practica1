@@ -1,6 +1,7 @@
 #pragma once
 #include "../ecs/Component.h"
 #include "../sdlutils/Texture.h"
+#include <vector>
 
 class Transform;
 
@@ -17,10 +18,15 @@ public:
 
     void initComponent() override;
 
+    void render() override;
+    void update() override;
+
 private:
-    int _rows, _cols, _frame, _lastChangeTime;
+    int _rows, _cols, _frame, _lastChangeTime = 0;
+    float _frameW, _frameH;
     Texture* _tex;
     Transform* _tr;
+    std::vector<SDL_FRect> _srcRects;
 
 };
 

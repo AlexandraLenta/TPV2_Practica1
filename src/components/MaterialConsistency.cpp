@@ -10,17 +10,18 @@ MaterialConsistency::~MaterialConsistency() {
 
 void MaterialConsistency::initComponent() {
 
-    _consistency = 10 + rand() % 91; //number between 10 and 100 
-    _lastCheck = sdlutils().currRealTime();
+    _consistency = 10 + rand() % 91; // random number between 10 and 100 
+    _lastCheck = sdlutils().currTime();
 }
 
 void MaterialConsistency::update() {
 
-    Uint32 now = sdlutils().currRealTime(); //obtener actual time
+    Uint32 now = sdlutils().currTime(); // obtain current time
 
-    if (now - _lastCheck > 5000) {
+    // if its been more than 5 seconds since the last consistency loss 
+    if (now - _lastCheck >= 5000) {
 
-        if (rand() % 10 == 0) {
+        if (rand() % 10 == 0) { // in 1 of 10 cases loses consistency
 
             _consistency--;
 
@@ -28,7 +29,6 @@ void MaterialConsistency::update() {
                 _ent->setAlive(false);
             }
         }
-
         _lastCheck = now;
     }
 }

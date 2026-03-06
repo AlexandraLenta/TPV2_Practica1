@@ -117,7 +117,10 @@ void Game::start() {
 		
 		Uint32 frameTime = sdlutils().currRealTime() - startTime; // how much time since beginning of this "frame" 
 		if (frameTime < 10) SDL_Delay(10 - frameTime); // delay 
- }
+
+		//std::cout << sdlutils().virtualTimer().deltaTime() << '\n';
+	}
+
 }
 
 void Game::checkCollisions() {

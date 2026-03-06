@@ -27,10 +27,12 @@ Gun::update() {
 	}
 
 	auto& ihldr = ih();
+	auto& vT = sdlutils().virtualTimer();
 
 	if (ihldr.isKeyDown(SDL_SCANCODE_S)) {
-		if (sdlutils().virtualTimer().currRealTime() - _lastShotTime >= _cooldown) {
-			_lastShotTime = sdlutils().virtualTimer().currRealTime();
+		Uint64 currTime = vT.currTime();
+		if (currTime - _lastShotTime >= _cooldown) {
+			_lastShotTime = currTime;
 
 			// play sound
 			sdlutils().soundEffects().at("gunshot").play("se");
