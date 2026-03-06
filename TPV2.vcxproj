@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\Follow.cpp" />
+    <ClCompile Include="src\components\MaterialConsistency.cpp" />
+    <ClCompile Include="src\components\ImageWithFrames.cpp" />
+    <ClCompile Include="src\components\Generations.cpp" />
     <ClCompile Include="src\game\GameOverState.cpp" />
     <ClCompile Include="src\game\PausedState.cpp" />
     <ClCompile Include="src\game\RunningState.cpp" />
@@ -50,8 +54,14 @@
     <ClCompile Include="src\components\StopOnBorders.cpp" />
     <ClCompile Include="src\ecs\EntityManager.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
+    <ClCompile Include="src\components\TeleportOnExit.cpp" />
+    <ClCompile Include="src\components\TowardDestination.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\Follow.h" />
+    <ClInclude Include="src\components\MaterialConsistency.h" />
+    <ClInclude Include="src\components\ImageWithFrames.h" />
+    <ClInclude Include="src\components\Generations.h" />
     <ClInclude Include="src\game\GameOverState.h" />
     <ClInclude Include="src\game\PausedState.h" />
     <ClInclude Include="src\game\RunningState.h" />
@@ -100,6 +110,8 @@
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\game\ecs_def.h" />
     <ClInclude Include="src\game\Game.h" />
+    <ClInclude Include="src\components\TeleportOnExit.h" />
+    <ClInclude Include="src\components\TowardDestination.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
