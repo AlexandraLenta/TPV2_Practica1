@@ -18,5 +18,11 @@ public:
 
 private:
     Uint32 _lastAsteroidTime;
+
+    void checkGameOver();
+    void checkPause();
+    void updateEntities();
+    void checkCollisions();
+    void checkAddAsteroid();
 };
 

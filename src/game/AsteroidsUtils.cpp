@@ -80,13 +80,13 @@ ecs::Entity* AsteroidsUtils::spawnAsteroid(const Vector2D& pos, const Vector2D& 
     auto* mngr = Game::Instance()->getMngr();
 
     // create entity
-    ecs::Entity* asteroid = mngr->addEntity();
+    ecs::Entity* asteroid = mngr->addEntity(ecs::grp::ASTEROIDS);
     mngr->setHandler(ecs::hdlr::ASTEROID, asteroid);
 
     float w = _asteroidTex->width();
     float h = _asteroidTex->height();
 
-    asteroid->addComponent<Transform>(pos, vel, (w / _cols) * generations/2, (h / _rows) * generations / 2, 0.0f); // transform
+    asteroid->addComponent<Transform>(pos, vel, (w / _cols) * generations/5, (h / _rows) * generations / 5, 0.0f); // transform
     asteroid->addComponent<Generations>(generations); // generations
 
     if (rng.nextInt(0, 2)) { // decide border behavior, if its 1 (true) add show at opposite side

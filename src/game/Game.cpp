@@ -122,32 +122,27 @@ void Game::start() {
 
 }
 
-void Game::checkCollisions() {
-
-	// the PacMan's Transform
-	//
-	auto pTR = _mngr->getHandler(ecs::hdlr::FIGHTER)->getComponent<Transform>();
-
-	// For safety, we traverse with a normal loop until the current size. In this
-	// particular case we could use a for-each loop since the list stars is not
-	// modified.
-	//
-	auto &stars = _mngr->getEntities(ecs::grp::STARS);
-	auto n = stars.size();
-	for (auto i = 0u; i < n; i++) {
-		auto e = stars[i];
-		if (e->isAlive()) { // if the star is active (it might have died in this frame)
-
-			// the Star's Transform
-			//
-			auto eTR = e->getComponent<Transform>();
-
-			// check if PacMan collides with the Star (i.e., eat it)
-			if (Collisions::collides(pTR->getPos(), pTR->getWidth(),
-					pTR->getHeight(), //
-					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
-				e->setAlive(false);
-			}
-		}
-	}
-}
+//void Game::checkCollisions() {
+//	// For safety, we traverse with a normal loop until the current size. In this
+//	// particular case we could use a for-each loop since the list stars is not
+//	// modified.
+//	//
+//	auto &stars = _mngr->getEntities(ecs::grp::STARS);
+//	auto n = stars.size();
+//	for (auto i = 0u; i < n; i++) {
+//		auto e = stars[i];
+//		if (e->isAlive()) { // if the star is active (it might have died in this frame)
+//
+//			// the Star's Transform
+//			//
+//			auto eTR = e->getComponent<Transform>();
+//
+//			// check if PacMan collides with the Star (i.e., eat it)
+//			if (Collisions::collides(pTR->getPos(), pTR->getWidth(),
+//					pTR->getHeight(), //
+//					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
+//				e->setAlive(false);
+//			}
+//		}
+//	}
+//}

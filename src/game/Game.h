@@ -60,7 +60,6 @@ public:
 	}
 
 private:
-	void checkCollisions();
 	ecs::EntityManager *_mngr;
 	FighterFacade* _fighterUtils;
 	AsteroidsFacade* _asteroidUtils;

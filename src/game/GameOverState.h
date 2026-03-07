@@ -1,5 +1,7 @@
 #pragma once
 #include "GameState.h"
+#include "../sdlutils/Texture.h"
+
 class GameOverState :
     public GameState
 {
@@ -9,5 +11,7 @@ public:
     void enter() override;
     void leave() override;
     void update() override;
+private:
+    const Texture* _tex;
 };
 

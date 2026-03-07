@@ -1,5 +1,27 @@
 #include "GameOverState.h"
+#include "Game.h"
+#include "../ecs/EntityManager.h"
+#include "../ecs/Entity.h"
+#include "../sdlutils/SDLUtils.h"
+#include "../sdlutils/InputHandler.h"
 
-void GameOverState::enter() {}
+void GameOverState::enter() {
+	if (Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS).size() <= 0) {
+		_tex = &sdlutils().msgs().at("game_over_win");
+	}
+	else {
+		_tex = &sdlutils().msgs().at("game_over_lose");
+	}
+}
+
 void GameOverState::leave() {}
-void GameOverState::update() {}
+
+void GameOverState::update() {
+	assert(_tex != nullptr);
+
+	_tex->render((sdlutils().width() - _tex->width()) / 2, (sdlutils().height() - _tex->height()) / 2);
+
+	if (ih().isKeyDown(SDL_SCANCODE_RETURN)) {
+		Game::Instance()->setState(Game::NEWGAME);
+	}
+}

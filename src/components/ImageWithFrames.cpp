@@ -29,6 +29,9 @@ ImageWithFrames::update() {
 	if (sdlutils().virtualTimer().currTime() - _lastChangeTime >= FRAME_TIME) {
 		// advance frame
 		_frame++;
+		if (_frame >= _cols * _rows) {
+			_frame = 0; // reset frame
+		}
 	}
 }
 

@@ -22,90 +22,17 @@ void RunningState::enter() {
 void RunningState::leave() {}
 
 void RunningState::update() {
-    auto& ihdlr = ih();
-
-    auto mngr = Game::Instance()->getMngr();
-    auto asteroidUtils = Game::Instance()->getAsteroidUtils();
-    auto fighterUtils = Game::Instance()->getFighterUtils();
-
     //a. if there are no asteroids, GameOver
-    //if (Game::Instance()->getAsteroidUtils()->nrOfAsteroids() <= 0) {
-    //    Game::Instance()->setState(Game::GAMEOVER);
-    //}
-
-    auto asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
-    if (asteroids.empty()) 
-    {
-        Game::Instance()->setState(Game::GAMEOVER);
-        return;
-    }
+    checkGameOver();
 
     //b. if press P, pause
-    if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_P)) {
-        Game::Instance()->setState(Game::PAUSED);
-        return;
-    }
+    checkPause();
 
     //c. Update entities
-    Game::Instance()->getMngr()->update();
-    Game::Instance()->getMngr()->flush();
+    updateEntities();
 
     //d. Collisions
-        // if fighter -> asteroid, remove health
-            // if 0 health, game over
-            // if > 0 health, new round
-
-    auto* fighter = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER);
-    auto* fighterTr = fighter->getComponent<Transform>();
-    auto fighterImg = fighter->getComponent<ImageWithFrames>();
-
-    auto& asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
-    auto gun = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER)->getComponent<Gun>();
-    auto health = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER)->getComponent<Health>();
-
-    for (size_t i = 0; i < asteroids.size(); i++) {
-        auto asteroid = asteroids[i];
-
-        if (!asteroid->isAlive()) continue; //if asteroid not alive, we skipe it
-
-        auto astImg = asteroid->getComponent<ImageWithFrames>();
-        auto astTr = asteroid->getComponent<Transform>();
-
-        //fighter vs asteroide
-        if (Collisions::collidesWithRotation(fighterTr->getPos(), fighterTr->getRot(), fighterTr->getWidth(), fighterTr->getHeight(),
-            astTr->getPos(), astTr->getRot(), astTr->getWidth(), astTr->getHeight())) { //huh
-
-            // Quitar una vida al caza
-            health->removeHealth(1);
-
-            if (health->getHP() > 0) 
-            {
-                // Si quedan vidas nueva ronda
-                Game::Instance()->setState(Game::NEWROUND);
-            }
-            else {
-                // Si no quedan vidas game over
-                Game::Instance()->setState(Game::GAMEOVER);
-            }
-            return; // salir cuando hay colition con caza
-        }
-                // if bullet -> asteroid, split asteroid, mark bullet as unused
-        for (auto& bullet : *gun) {
-            if (!bullet.used) continue;
-
-            SDL_Rect bulletRect = {(int)bullet.pos.getX(),(int)bullet.pos.getY(),bullet.width,bullet.height};
-            SDL_Rect asteroidRect = {(int)astTr->getPos().getX(),(int)astTr->getPos().getY(),astTr->getWidth(),astTr->getHeight() };
-
-            if (Collisions::collidesWithRotation (bullet.pos, bullet.rot,bullet.width, bullet.height, astTr->getPos(), astTr->getRot(), astTr->getWidth(), astTr->getHeight())) {
-                Game::Instance()->getAsteroidUtils()->split_asteroid(asteroid);
-
-                // arcar bala como no usadas
-                bullet.used = false;
-
-                break;  // Salir del bucle de balas para este asteroide
-            }
-        }
-    }
+    checkCollisions();
 
     //e. render entities
     Game::Instance()->getMngr()->render();
@@ -114,6 +41,88 @@ void RunningState::update() {
     Game::Instance()->getMngr()->refresh();
 
     //g. add asteroid if it's been 5 seconds since the last one
+    checkAddAsteroid();
+}
+
+void
+RunningState::checkGameOver() {
+    auto asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
+    if (asteroids.empty())
+    {
+        Game::Instance()->setState(Game::GAMEOVER);
+        return;
+    }
+}
+
+void
+RunningState::checkPause() {
+    if (ih().keyDownEvent() && ih().isKeyDown(SDL_SCANCODE_P)) {
+        Game::Instance()->setState(Game::PAUSED);
+        return;
+    }
+}
+
+void
+RunningState::updateEntities() {
+    Game::Instance()->getMngr()->update();
+    Game::Instance()->getMngr()->flush();
+}
+
+void
+RunningState::checkCollisions() {
+    auto* fighter = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER);
+    auto* fighterTr = fighter->getComponent<Transform>();
+    auto fighterGun = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER)->getComponent<Gun>();
+    auto fighterHealth = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER)->getComponent<Health>();
+
+    auto& asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
+
+    for (size_t i = 0; i < asteroids.size(); i++) {
+        auto asteroid = asteroids[i];
+
+        if (!asteroid->isAlive()) continue; // if asteroid not alive, we skip it
+
+        auto astTr = asteroid->getComponent<Transform>();
+
+        // fighter vs asteroid
+        if (Collisions::collidesWithRotation(fighterTr->getPos(), fighterTr->getWidth(), fighterTr->getHeight(), fighterTr->getRot(),
+            astTr->getPos(), astTr->getWidth(), astTr->getHeight(), astTr->getRot())) {
+
+            std::cout << "FIGHTER & ASTEROID\n";
+
+            // remove 1 hp from fighter
+            fighterHealth->removeHealth(1);
+
+            if (fighterHealth->getHP() > 0)
+            {
+                // if alive, start new round
+                Game::Instance()->setState(Game::NEWROUND);
+            }
+            else {
+                // if dead, game over
+                Game::Instance()->setState(Game::GAMEOVER);
+            }
+            return; // if fighter collided with asteroid, dont check for more
+        }
+
+        // bullet vs asteroid
+        for (auto& bullet : *fighterGun) {
+            if (!bullet.used) continue; // if bullet isn't used, don't check
+
+            if (Collisions::collidesWithRotation(bullet.pos, bullet.width, bullet.height, bullet.rot, astTr->getPos(), astTr->getWidth(), astTr->getHeight(), astTr->getRot())) {
+                Game::Instance()->getAsteroidUtils()->split_asteroid(asteroid); // if they collided, split the asteroid
+
+                std::cout << "BULLET & ASTEROID\n";
+                // mark bullet as unused
+                bullet.used = false;
+
+                break;  // don't check mroe collisions for this asteroid
+            }
+        }
+    }
+}
+
+void RunningState::checkAddAsteroid() {
     if (sdlutils().virtualTimer().currRealTime() - _lastAsteroidTime > 5000) {
         Game::Instance()->getAsteroidUtils()->create_asteroids(1);
         _lastAsteroidTime = sdlutils().virtualTimer().currTime();

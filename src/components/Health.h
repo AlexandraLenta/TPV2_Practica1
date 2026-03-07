@@ -27,5 +27,6 @@ private:
 	int _hp;
 	int _maxHp;
 	const Texture* _tex;
+	float _imgScaleFactor = 0.3f;
 };
 

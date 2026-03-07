@@ -35,10 +35,10 @@ Health::getHP() {
 
 void
 Health::render() {
-	// TODO: render hp amount of hearts
-
 	assert(_tex != nullptr);
-	_tex->render(0,0 );
 
-	//sdlutils().width() - _hp * _tex->width()
+	for (int i = 0; i < _hp; i++) {
+		SDL_FRect dest = build_sdlfrect(i*_tex->width() * _imgScaleFactor, 0, _tex->width() * _imgScaleFactor, _tex->height() * _imgScaleFactor);
+		_tex->render(dest);
+	}
 }
