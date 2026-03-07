@@ -63,27 +63,23 @@ void RunningState::update() {
     auto gun = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER)->getComponent<Gun>();
     auto health = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER)->getComponent<Health>();
 
-    asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
-
     for (size_t i = 0; i < asteroids.size(); i++) {
         auto asteroid = asteroids[i];
 
-        if (!asteroid->isAlive()) continue; //if asteroid alive, we skipe it
+        if (!asteroid->isAlive()) continue; //if asteroid not alive, we skipe it
 
         auto astImg = asteroid->getComponent<ImageWithFrames>();
         auto astTr = asteroid->getComponent<Transform>();
 
-        float w = astTr->getWidth(); //se coge asi?
-        float h = astTr->getHeight();
-
         //fighter vs asteroide
-        if (Collisions::collidesWithRotation(fighterTr->getPos(), fighterTr->getRot(), fighterImg->w, fighterImg->h,
-            astTr->getPos(), astTr->getRot(), astImg->w, astImg->h)) { //huh
+        if (Collisions::collidesWithRotation(fighterTr->getPos(), fighterTr->getRot(), fighterTr->getWidth(), fighterTr->getHeight(),
+            astTr->getPos(), astTr->getRot(), astTr->getWidth(), astTr->getHeight())) { //huh
 
             // Quitar una vida al caza
             health->removeHealth(1);
 
-            if (health->getHP() > 0) {
+            if (health->getHP() > 0) 
+            {
                 // Si quedan vidas nueva ronda
                 Game::Instance()->setState(Game::NEWROUND);
             }
@@ -98,9 +94,9 @@ void RunningState::update() {
             if (!bullet.used) continue;
 
             SDL_Rect bulletRect = {(int)bullet.pos.getX(),(int)bullet.pos.getY(),bullet.width,bullet.height};
-            SDL_Rect asteroidRect = {(int)astTr->getPos().getX(),(int)astTr->getPos().getY(),w,h};
+            SDL_Rect asteroidRect = {(int)astTr->getPos().getX(),(int)astTr->getPos().getY(),astTr->getWidth(),astTr->getHeight() };
 
-            if (Collisions::collidesWithRotation (bullet.pos,0,bullet.width, bullet.height, astTr->getPos(), astTr->getRot(), astImg->w, astImg->h)) {
+            if (Collisions::collidesWithRotation (bullet.pos, bullet.rot,bullet.width, bullet.height, astTr->getPos(), astTr->getRot(), astTr->getWidth(), astTr->getHeight())) {
                 Game::Instance()->getAsteroidUtils()->split_asteroid(asteroid);
 
                 // arcar bala como no usadas
