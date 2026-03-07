@@ -117,6 +117,8 @@ ecs::Entity* AsteroidsUtils::spawnAsteroid(const Vector2D& pos, const Vector2D& 
 }
 
 void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
+    a->setAlive(false);
+
     const auto& genComp = a->getComponent<Generations>();
 
     genComp->decreaseGeneration();
