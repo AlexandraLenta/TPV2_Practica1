@@ -4,6 +4,7 @@
 
 void PausedState::enter() {
     sdlutils().virtualTimer().pause();
+    _tex = &sdlutils().msgs().at("pause");
 }
 
 void PausedState::leave() {
@@ -11,8 +12,7 @@ void PausedState::leave() {
 }
 
 void PausedState::update() {
-
-    sdlutils().msgs().at("press any key to resume the game").render(200, 300);
+    _tex->render((sdlutils().width() - _tex->width()) / 2, (sdlutils().height() - _tex->height()) / 2);
 
     if (ih().keyDownEvent()) {
         Game::Instance()->setState(Game::RUNNING);

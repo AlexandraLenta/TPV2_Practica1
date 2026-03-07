@@ -43,7 +43,7 @@ private:
 	void shoot(Vector2D p, Vector2D v, int width, int height, float r);
 	
 	bullets_array_t _bullets;
-	float _cooldown = 0.25f;
+	float _cooldown = 250.0f;
 	float _lastShotTime = 0.0f;
 
 	int _lastUsedBullet = -1;

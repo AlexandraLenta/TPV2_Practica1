@@ -9,21 +9,18 @@
   ],
   
   "images" : [
-    { "id" : "airplanes", "file" : "resources/images/airplanes.png" },
     { "id" : "asteroid", "file" : "resources/images/asteroid.png" },
     { "id" : "asteroid_gold", "file" : "resources/images/asteroid_gold.png" },
     { "id" : "fighter", "file" : "resources/images/fighter.png" },
     { "id" : "fighter2", "file" : "resources/images/fighter2.png" },
     { "id" : "fire", "file" : "resources/images/fire.png" },
-    { "id" : "heart", "file" : "resources/images/heart.png" },
-    { "id" : "pointing_down", "file" : "resources/images/pointing-down.png" }
-
+    { "id" : "heart", "file" : "resources/images/heart.png" }
   ],
   
   "messages" : [
     { "id" : "game_start", "text" : "Press any key to start a new game", "font" : "ARIAL24", "color" : "0xffffffff"},
     { "id" : "round_start", "text" : "Press ENTER to start a new round", "font" : "ARIAL24", "color" : "0xffffffff"},
-    { "id" : "continue", "text" : "Press space to continue", "font" : "ARIAL24", "color" : "0x112233ff", "bg" : "0xffffffff" },
+    { "id" : "pause", "text" : "Press any key to resume the game", "font" : "ARIAL24", "color" : "0x112233ff", "bg" : "0xffffffff" },
     { "id" : "game_over_win", "text" : "Game Over Champion! Press ENTER to continue.", "font" : "ARIAL24", "color" : "0x0000ffff" },
     { "id" : "game_over_lose", "text" : "Game Over Loser! Press ENTER to continue.", "font" : "ARIAL24", "color" : "0x0000ffff" }
   ],

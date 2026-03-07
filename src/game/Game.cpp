@@ -105,7 +105,6 @@ void Game::start() {
 		vt.regCurrTime(); // register current time so all objects use the same time
 		
 		ihdlr.refresh(); // refresh input
-
 		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) { // if escape key, exit game
 			exit = true;
 			continue;

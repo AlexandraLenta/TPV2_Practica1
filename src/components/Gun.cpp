@@ -20,20 +20,12 @@ Gun::reset() {
 
 void
 Gun::update() {
-	for (auto& bullet : _bullets) {
-		if (bullet.used) {
-			bullet.pos = bullet.pos + bullet.vel;
-		}
-	}
-
 	auto& ihldr = ih();
 	auto& vT = sdlutils().virtualTimer();
 
 	if (ihldr.isKeyDown(SDL_SCANCODE_S)) {
 		Uint64 currTime = vT.currTime();
 		if (currTime - _lastShotTime >= _cooldown) {
-			_lastShotTime = currTime;
-
 			// play sound
 			sdlutils().soundEffects().at("gunshot").play("se");
 
@@ -45,8 +37,21 @@ Gun::update() {
 			Vector2D bv = Vector2D(0, -1).rotate(_tr->getRot()) * (_tr->getVel().magnitude() + 5.0f);
 			float br = Vector2D(0, -1).angle(bv);
 			shoot(bp, bv, bw, bh, br);
+
+			_lastShotTime = currTime;
 		}
 	}
+
+	for (auto& bullet : _bullets) {
+		if (bullet.used) {
+			bullet.pos = bullet.pos + bullet.vel;
+			if (bullet.pos.getX() + bullet.width <= 0 || bullet.pos.getX() >= sdlutils().width() ||
+				bullet.pos.getY() + bullet.height <= 0 || bullet.pos.getY() >= sdlutils().height()) {
+				bullet.used = false;
+			}
+		}
+	}
+	
 }
 
 void
@@ -75,7 +80,7 @@ Gun::shoot(Vector2D p, Vector2D v, int width, int height, float r) {
 			_bullets[i].used = true;
 
 			_lastUsedBullet = i;
-			break;
+			return;
 		}
 	}
 }

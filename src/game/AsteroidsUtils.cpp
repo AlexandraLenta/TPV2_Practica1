@@ -26,7 +26,6 @@ AsteroidsUtils::~AsteroidsUtils()
 }
 
 void AsteroidsUtils::create_asteroids(int n) {
-
     auto& rng = sdlutils().rand();
     int width = sdlutils().width();
     int height = sdlutils().height();
@@ -98,14 +97,14 @@ ecs::Entity* AsteroidsUtils::spawnAsteroid(const Vector2D& pos, const Vector2D& 
 
     const Texture* texToUse = _asteroidTex;
 
-    int follow = rng.nextInt(0, 3);
-    if (!follow) { // decide route. if 0 (false) go towards destination
-        asteroid->addComponent<TowardDestination>();
-        texToUse = _goldAsteroidTex;
-    }
-    else if (follow == 1) { // if 1 follow player
+    //int follow = rng.nextInt(0, 3);
+    //if (!follow) { // decide route. if 0 (false) go towards destination
+        //asteroid->addComponent<TowardDestination>();
+        //texToUse = _goldAsteroidTex;
+    //}
+    //else if (follow == 1) { // if 1 follow player
         asteroid->addComponent<Follow>();
-    } // if 2 (none of the above), dont add anything
+    //} // if 2 (none of the above), dont add anything
 
     asteroid->addComponent<ImageWithFrames>(texToUse, _rows, _cols); // animation/image & frames
 

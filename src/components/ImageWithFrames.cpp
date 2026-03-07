@@ -28,8 +28,7 @@ void
 ImageWithFrames::update() {
 	if (sdlutils().virtualTimer().currTime() - _lastChangeTime >= FRAME_TIME) {
 		// advance frame
-		_frame++;
-		if (_frame >= _cols * _rows) {
+		if (++_frame >= _cols * _rows) {
 			_frame = 0; // reset frame
 		}
 		_lastChangeTime = sdlutils().virtualTimer().currTime();
@@ -40,7 +39,6 @@ void
 ImageWithFrames::render() {
 	// dest rect for the current frame
 	SDL_FRect dest = build_sdlfrect(_tr->getPos(), _tr->getWidth(), _tr->getHeight());
-	
 	// render the src frame rect to the dest rect
 	_tex->render(_srcRects[_frame], dest);
 }

@@ -17,19 +17,21 @@ RunningState::RunningState(): _lastAsteroidTime(0)
 
 void RunningState::enter() {
     _lastAsteroidTime = sdlutils().virtualTimer().currTime();
+    std::cout << "RUNNIGN\n";
 }
 
 void RunningState::leave() {}
 
 void RunningState::update() {
-    //a. if there are no asteroids, GameOver
+    //a. Update entities (first because we need to add the new entities at the start of the loop)
+    //      otherwise the game will detect game over
+    updateEntities();
+
+    //b. if there are no asteroids, GameOver
     checkGameOver();
 
-    //b. if press P, pause
+    //c. if press P, pause
     checkPause();
-
-    //c. Update entities
-    updateEntities();
 
     //d. Collisions
     checkCollisions();
@@ -49,6 +51,7 @@ RunningState::checkGameOver() {
     auto asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
     if (asteroids.empty())
     {
+        std::cout << "asteroids empty\n";
         Game::Instance()->setState(Game::GAMEOVER);
         return;
     }
