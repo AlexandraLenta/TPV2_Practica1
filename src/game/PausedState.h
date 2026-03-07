@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
+#include "../sdlutils/Font.h"
 
 class PausedState :
     public GameState
@@ -16,5 +17,6 @@ public:
 
 private:
     const Texture* _tex;
+    const Texture* _statTex;
 };
 
