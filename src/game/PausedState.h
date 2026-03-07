@@ -14,10 +14,12 @@ public:
     void enter() override;
     void leave() override;
     void update() override;
+    int calculateMinDistanceToFighter() const;
 
 private:
     const Texture* _tex;
     const Texture* _statTex;
     const Texture* _healthTex;
+    const Texture* _distanceTex;
 };
 
