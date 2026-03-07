@@ -4,6 +4,8 @@
 #include "../utils/Vector2D.h"
 #include "../sdlutils/Texture.h"
 
+static const int NR_OF_ASTEROIDS = 2;
+
 class AsteroidsUtils : public AsteroidsFacade {
 public:
     AsteroidsUtils();

@@ -32,6 +32,7 @@ ImageWithFrames::update() {
 		if (_frame >= _cols * _rows) {
 			_frame = 0; // reset frame
 		}
+		_lastChangeTime = sdlutils().virtualTimer().currTime();
 	}
 }
 

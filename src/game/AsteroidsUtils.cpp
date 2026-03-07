@@ -134,16 +134,19 @@ void AsteroidsUtils::split_asteroid(ecs::Entity* a) {
     auto w = tr->getWidth();
     auto h = tr->getHeight();
 
-    int r = sdlutils().rand().nextInt(0, 360);
-    Vector2D pos = p + v.rotate(r) * 2 * std::max(w, h);
-    Vector2D vel = v.rotate(r) * 1.1f;
+    for (int i = 0; i < NR_OF_ASTEROIDS; i++) {
 
-    ecs::Entity* asteroid = spawnAsteroid(pos, vel, generations);
+        int r = sdlutils().rand().nextInt(0, 360);
+        Vector2D pos = p + v.rotate(r) * 2 * std::max(w, h);
+        Vector2D vel = v.rotate(r) * 1.1f;
 
-    if (a->hasComponent<MaterialConsistency>()) {
-        asteroid->addComponent<MaterialConsistency>(a->getComponent<MaterialConsistency>()->getConsistency());
-    }
-    else {
-        asteroid->removeComponent<MaterialConsistency>();
+        ecs::Entity* asteroid = spawnAsteroid(pos, vel, generations);
+
+        if (a->hasComponent<MaterialConsistency>()) {
+            asteroid->addComponent<MaterialConsistency>(a->getComponent<MaterialConsistency>()->getConsistency());
+        }
+        else {
+            asteroid->removeComponent<MaterialConsistency>();
+        }
     }
 }

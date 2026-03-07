@@ -53,8 +53,7 @@ void
 Gun::render() {
 	for (auto& bullet : _bullets) {
 		if (bullet.used) {
-			SDL_FRect dest = build_sdlfrect(bullet.pos, bullet.width,
-				bullet.height);
+			SDL_FRect dest = build_sdlfrect(bullet.pos, _tex->width(), _tex->height());
 
 			assert(_tex != nullptr);
 			_tex->render(dest, bullet.rot);

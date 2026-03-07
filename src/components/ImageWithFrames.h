@@ -26,6 +26,5 @@ private:
     const Texture* _tex;
     Transform* _tr;
     std::vector<SDL_FRect> _srcRects;
-
 };
 
