@@ -24,6 +24,7 @@ public:
 private:
     int _rows, _cols, _frame, _lastChangeTime = 0;
     const Texture* _tex;
+    float _frameW, _frameH;
     Transform* _tr;
     std::vector<SDL_FRect> _srcRects;
 };
