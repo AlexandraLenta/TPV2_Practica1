@@ -12,7 +12,6 @@
     { "id" : "asteroid", "file" : "resources/images/asteroid.png" },
     { "id" : "asteroid_gold", "file" : "resources/images/asteroid_gold.png" },
     { "id" : "fighter", "file" : "resources/images/fighter.png" },
-    { "id" : "fighter2", "file" : "resources/images/fighter2.png" },
     { "id" : "fire", "file" : "resources/images/fire.png" },
     { "id" : "heart", "file" : "resources/images/heart.png" }
   ],

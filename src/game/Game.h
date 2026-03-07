@@ -12,10 +12,9 @@ class FighterFacade;
 class AsteroidsFacade;
 
 class Game : public Singleton<Game> {
+	friend Singleton<Game>;
 public:
-	Game();
 	virtual ~Game();
-	bool init();
 	void initGame();
 	void start();
 
@@ -60,6 +59,9 @@ public:
 	}
 
 private:
+	Game();
+	bool init();
+
 	ecs::EntityManager *_mngr;
 	FighterFacade* _fighterUtils;
 	AsteroidsFacade* _asteroidUtils;

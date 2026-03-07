@@ -92,6 +92,8 @@ RunningState::checkCollisions() {
             // remove 1 hp from fighter
             fighterHealth->removeHealth(1);
 
+            sdlutils().soundEffects().at("explosion").play("se");
+
             if (fighterHealth->getHP() > 0)
             {
                 // if alive, start new round
@@ -110,6 +112,8 @@ RunningState::checkCollisions() {
 
             if (Collisions::collidesWithRotation(bullet.pos, bullet.width, bullet.height, bullet.rot, astTr->getPos(), astTr->getWidth(), astTr->getHeight(), astTr->getRot())) {
                 Game::Instance()->getAsteroidUtils()->split_asteroid(asteroid); // if they collided, split the asteroid
+
+                sdlutils().soundEffects().at("explosion").play("se");
 
                 // mark bullet as unused
                 bullet.used = false;
