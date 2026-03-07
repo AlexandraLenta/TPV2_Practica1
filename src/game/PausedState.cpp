@@ -41,6 +41,9 @@ void PausedState::leave() {
 
     delete _healthTex;
     _healthTex = nullptr;
+
+    delete _distanceTex;
+    _distanceTex = nullptr;
 }
 
 void PausedState::update() {
