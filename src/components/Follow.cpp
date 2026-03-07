@@ -22,5 +22,7 @@ Follow::update() {
 	auto& v = _tr->getVel();
 	auto& p = _tr->getPos();
 	auto& q = _fighterTr->getPos();
-	v.rotate(v.angle(q - p) > 0 ? 1.0f : -1.0f);
+
+	Vector2D dir = (q - p).normalize();
+	v = dir * v.magnitude();
 }
