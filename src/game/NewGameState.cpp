@@ -9,7 +9,6 @@ NewGameState::NewGameState() {
 }
 
 void NewGameState::enter() {
-    std::cout << "NEW\n";
 }
 
 void NewGameState::leave() {

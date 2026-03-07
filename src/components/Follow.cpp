@@ -5,7 +5,6 @@
 #include "../components/Transform.h"
 
 Follow::Follow() {
-
 }
 
 void

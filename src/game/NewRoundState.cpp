@@ -14,7 +14,7 @@ void NewRoundState::enter() {}
 void NewRoundState::leave() {
     Game::Instance()->getFighterUtils()->reset_fighter();
     Game::Instance()->getAsteroidUtils()->remove_all_asteroids();
-    Game::Instance()->getAsteroidUtils()->create_asteroids(2);
+    Game::Instance()->getAsteroidUtils()->create_asteroids(10);
 }
 
 void NewRoundState::update() {

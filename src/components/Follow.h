@@ -16,6 +16,5 @@ private:
     Transform* _tr;
     Transform* _fighterTr;
     float _rotateSpeed;
-
 };
 

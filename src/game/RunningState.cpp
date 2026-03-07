@@ -17,7 +17,6 @@ RunningState::RunningState(): _lastAsteroidTime(0)
 
 void RunningState::enter() {
     _lastAsteroidTime = sdlutils().virtualTimer().currTime();
-    std::cout << "RUNNIGN\n";
 }
 
 void RunningState::leave() {}
@@ -51,7 +50,6 @@ RunningState::checkGameOver() {
     auto asteroids = Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS);
     if (asteroids.empty())
     {
-        std::cout << "asteroids empty\n";
         Game::Instance()->setState(Game::GAMEOVER);
         return;
     }
@@ -91,8 +89,6 @@ RunningState::checkCollisions() {
         if (Collisions::collidesWithRotation(fighterTr->getPos(), fighterTr->getWidth(), fighterTr->getHeight(), fighterTr->getRot(),
             astTr->getPos(), astTr->getWidth(), astTr->getHeight(), astTr->getRot())) {
 
-            std::cout << "FIGHTER & ASTEROID\n";
-
             // remove 1 hp from fighter
             fighterHealth->removeHealth(1);
 
@@ -115,7 +111,6 @@ RunningState::checkCollisions() {
             if (Collisions::collidesWithRotation(bullet.pos, bullet.width, bullet.height, bullet.rot, astTr->getPos(), astTr->getWidth(), astTr->getHeight(), astTr->getRot())) {
                 Game::Instance()->getAsteroidUtils()->split_asteroid(asteroid); // if they collided, split the asteroid
 
-                std::cout << "BULLET & ASTEROID\n";
                 // mark bullet as unused
                 bullet.used = false;
 

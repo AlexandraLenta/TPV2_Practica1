@@ -22,13 +22,10 @@ TowardDestination::pickDestination() {
 
 	Vector2D dir = (_destination - pos).normalize();
 	vel = dir * vel.magnitude();
-
-	std::cout << "picked: " << _destination << std::endl << "vel: " << vel << std::endl;
 }
 
 void TowardDestination::update() {
 	if ((_destination - _tr->getPos()).magnitude() <= _minDistance) {
 		pickDestination();
-		std::cout << "destination reached.\n";
 	}
 }
