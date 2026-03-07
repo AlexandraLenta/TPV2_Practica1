@@ -9,5 +9,4 @@ public:
 	virtual void reset_fighter() = 0;
 	virtual void reset_lives() = 0;
 	virtual int update_lives(int n) = 0;
-	virtual ecs::Entity* getFighter() = 0;
 };

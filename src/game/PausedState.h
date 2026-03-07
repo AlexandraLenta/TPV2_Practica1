@@ -18,5 +18,6 @@ public:
 private:
     const Texture* _tex;
     const Texture* _statTex;
+    const Texture* _healthTex;
 };
 

@@ -3,6 +3,8 @@
 #include "../game/Game.h"
 #include "../game/FighterFacade.h"
 #include "../components/Transform.h"
+#include "../ecs/EntityManager.h"
+#include "../ecs/Entity.h"
 
 Follow::Follow() {
 }
@@ -12,7 +14,7 @@ Follow::initComponent() {
 	_tr = _ent->getComponent<Transform>();
 	assert(_tr != nullptr);
 
-	_fighterTr = Game::Instance()->getFighterUtils()->getFighter()->getComponent<Transform>();
+	_fighterTr = Game::Instance()->getMngr()->getHandler(ecs::hdlr::FIGHTER)->getComponent<Transform>();
 	assert(_fighterTr != nullptr);
 }
 
