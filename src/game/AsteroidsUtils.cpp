@@ -84,8 +84,10 @@ ecs::Entity* AsteroidsUtils::spawnAsteroid(const Vector2D& pos, const Vector2D& 
 
     float w = _asteroidTex->width();
     float h = _asteroidTex->height();
+    
+    float sizeMultiplier = sqrt(generations) / 3.0f;
 
-    asteroid->addComponent<Transform>(pos, vel, (w / _cols) * generations/5, (h / _rows) * generations / 5, 0.0f); // transform
+    asteroid->addComponent<Transform>(pos, vel, (w / _cols) * sizeMultiplier, (h / _rows) * sizeMultiplier, 0.0f); // transform
     asteroid->addComponent<Generations>(generations); // generations
 
     if (rng.nextInt(0, 2)) { // decide border behavior, if its 1 (true) add show at opposite side
