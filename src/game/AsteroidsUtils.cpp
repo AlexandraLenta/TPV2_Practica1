@@ -56,7 +56,7 @@ void AsteroidsUtils::create_asteroids(int n) {
         Vector2D centerPos = (screenCenter + Vector2D{(float)rng.nextInt(-100, 101), (float)rng.nextInt(-100, 101)}).normalize();
 
         float speed = rng.nextInt(1, 10)/10.0f;
-        Vector2D velocity = (centerPos - spawnPos) * speed; // asteroid speed
+        Vector2D velocity = (centerPos - spawnPos).normalize() * speed; // asteroid speed
 
         // --------- GENERATIONS -------------
 
