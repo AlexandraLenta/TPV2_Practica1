@@ -20,11 +20,10 @@ public:
 
     void render() override;
     void update() override;
-    const Texture* _tex;
 
 private:
     int _rows, _cols, _frame, _lastChangeTime = 0;
-
+    const Texture* _tex;
     Transform* _tr;
     std::vector<SDL_FRect> _srcRects;
 
