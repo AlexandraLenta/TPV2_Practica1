@@ -8,9 +8,11 @@
 void GameOverState::enter() {
 	if (Game::Instance()->getMngr()->getEntities(ecs::grp::ASTEROIDS).size() <= 0) {
 		_tex = &sdlutils().msgs().at("game_over_win");
+		//sdlutils().soundEffects().at("imperial_march").play("se");
 	}
 	else {
 		_tex = &sdlutils().msgs().at("game_over_lose");
+		sdlutils().soundEffects().at("laugh").play("se");
 	}
 }
 
