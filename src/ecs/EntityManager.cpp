@@ -17,7 +17,6 @@ EntityManager::EntityManager() :
 }
 
 EntityManager::~EntityManager() {
-
 	// delete all entities
 	//
 	for (auto &ents : _entsByGroup) {
