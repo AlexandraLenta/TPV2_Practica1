@@ -84,10 +84,8 @@ public:
 	//
 	template<typename T, typename ...Ts>
 	inline T* addComponent(Ts &&... args) {
-
 		// the component id
-		constexpr cmpId_t cId = cmpId<T>;
-		static_assert(cId < ecs::maxComponentId);
+		ecs::cmpId_t cId = ecs::cmpId<T>;
 
 		// delete the current component, if any
 		//
@@ -110,9 +108,11 @@ public:
 	template<typename T>
 	inline void removeComponent() {
 
-		// the component id
-		constexpr cmpId_t cId = cmpId<T>;
-		static_assert(cId < ecs::maxComponentId);
+		//// the component id
+		//constexpr cmpId_t cId = cmpId<T>;
+		//static_assert(cId < ecs::maxComponentId);
+
+		ecs::cmpId_t cId = ecs::cmpId<T>;
 
 		if (_cmps[cId] != nullptr) {
 
@@ -145,8 +145,7 @@ public:
 	inline T* getComponent() {
 
 		// the component id
-		constexpr cmpId_t cId = cmpId<T>;
-		static_assert(cId < ecs::maxComponentId);
+		ecs::cmpId_t cId = ecs::cmpId<T>;
 
 		return static_cast<T*>(_cmps[cId]);
 	}
@@ -157,8 +156,7 @@ public:
 	inline bool hasComponent() {
 
 		// the component id
-		constexpr cmpId_t cId = cmpId<T>;
-		static_assert(cId < ecs::maxComponentId);
+		ecs::cmpId_t cId = ecs::cmpId<T>;
 
 		return _cmps[cId] != nullptr;
 	}

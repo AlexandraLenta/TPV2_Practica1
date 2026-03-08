@@ -8,7 +8,6 @@ EntityManager::EntityManager() :
 		_hdlrs(), //
 		_entsByGroup() //
 {
-
 	// for each group we reserve space for 100 entities,
 	// just to avoid copies
 	//

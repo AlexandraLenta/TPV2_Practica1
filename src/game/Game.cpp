@@ -1,8 +1,6 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
 #include "Game.h"
-
-#include "../components/GameCtrl.h"
 #include "../ecs/Entity.h"
 #include "../ecs/EntityManager.h"
 #include "../sdlutils/InputHandler.h"
@@ -70,11 +68,6 @@ void
 Game::initGame() {
 	// Create the manager
 	_mngr = new EntityManager();
-
-	// create the game info entity
-	auto ginfo = _mngr->addEntity();
-	_mngr->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	ginfo->addComponent<GameCtrl>();
 
 	_fighterUtils = new FighterUtils();
 	_fighterUtils->create_fighter();

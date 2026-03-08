@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cstdint>
+#include "../utils/GenID.h"
 
 // You should define a file ../game/ecs_defs.h with the list of your
 // components, groups, and handlers. See ecs_defs_example.h for an
@@ -75,7 +76,7 @@ constexpr hdlrId_t maxHandlerId = hdlr::hdlrId::_LAST_HDLR_ID;
 
 // a template variable to obtain the component id.
 template<typename T>
-constexpr cmpId_t cmpId = T::id;
+ecs::cmpId_t cmpId = GenID<>::Get_Id<T>();
 
 // a macro for component identifier declaration, e.g., __CMPID_DECL__(ecs::_TRANSFORM)
 // expands to:
