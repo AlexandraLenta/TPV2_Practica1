@@ -32,16 +32,12 @@ void FighterCtrl::update() {
 
 		// also rotate the fighter so it looks in the same
 		// direction where it moves
-		//
-		vel_ = vel_.rotate(5.0f);
 	}
 	else if (ihldr.isKeyDown(SDL_SCANCODE_LEFT)) { // rotate left
 		_tr->setRot(rot - 5.0f);
 
 		// also rotate the fighter so it looks in the same
 		// direction where it moves
-		//
-		vel_ = vel_.rotate(-5.0f);
 	}
 	else if (ihldr.isKeyDown(SDL_SCANCODE_UP)) { // increase speed
 		Vector2D new_vel = vel_ + Vector2D(0, -1).rotate(rot) * _thrust;
